@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import Required JS Modules -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+    
+    <!-- Load CSS for page -->
+    <link rel="stylesheet" href="/css/login.css">
+    
+    <title>Login</title>
+
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="login-box">
+
+            <h1 class="title">Slant</h1>
+
+            <div class="login-content">
+
+                <form id="login-form" style="display:contents;">
+                    <input class="user-input" type="text" id="username" placeholder="Username">
+
+                    <div id="username-error-box"></div>
+
+                    <input class="user-input" type="password" id="password" placeholder="Password">
+
+                    <div id="password-error-box"></div>
+
+                    <div id="login-buttons">
+                        <input id="login-button" type="submit" value="Login">
+                        <input id="signup-button" type="submit" value="Signup">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>

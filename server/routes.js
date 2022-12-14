@@ -1,5 +1,13 @@
+let database = require("../database/database")
+
 async function homePage(request, response) {
-    response.render("home_page", {"id": request.params.id})
+    let users = await database.getTest();
+    response.render("home_page", {"id": request.params.id, "users": users})
+}
+
+async function loginPage(request, response) {
+    response.render("login")
 }
 
 module.exports.homePage = homePage;
+module.exports.loginPage = loginPage;
