@@ -10,12 +10,12 @@
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
     <!-- Load Javascript for page -->
-    <script src="/javascript/login.js"></script>
+    <script src="/javascript/auth/login.js"></script>
 
     <!-- Load CSS for page -->
-    <link rel="stylesheet" href="/css/login.css">
+    <link rel="stylesheet" href="/css/auth.css">
     
-    <title>Login</title>
+    <title>Slant - Login</title>
 
 </head>
 <body>
@@ -28,17 +28,19 @@
             <div class="login-content">
 
                 <form id="login-form" style="display:contents;" onsubmit="return false;">
+                    <h3 class="sub-title">Login</h3>
+
                     <input class="user-input" type="text" id="username" placeholder="Username">
 
-                    <div id="username-error-box"></div>
+                    <div class="error-box" id="username-error-box"></div>
 
                     <input class="user-input" type="password" id="password" placeholder="Password">
 
-                    <div id="password-error-box"></div>
+                    <div class="error-box" id="password-error-box"></div>
 
                     <div id="login-buttons">
-                        <input id="login-button" type="submit" value="Login">
-                        <input id="signup-button" type="submit" value="Signup">
+                        <input id="login-login-button" type="submit" value="Login">
+                        <input id="login-signup-button" type="submit" value="Signup">
                     </div>
 
                 </form>

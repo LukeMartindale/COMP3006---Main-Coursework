@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import Required JS Modules -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+    <!-- Load Javascript for page -->
+    <script src="/javascript/auth/signup.js"></script>
+
+    <!-- Load CSS for page -->
+    <link rel="stylesheet" href="/css/auth.css">
+    
+    <title>Slant - Signup</title>
+
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="login-box">
+
+            <h1 class="title">Slant</h1>
+
+            <div class="login-content">
+
+                <form id="login-form" style="display:contents;" onsubmit="return false;">
+                    <h3 class="sub-title">Signup</h3>
+
+                    <input class="user-input" type="text" id="username" placeholder="Username">
+
+                    <div class="error-box" id="username-error-box"></div>
+
+                    <input class="user-input" type="password" id="password" placeholder="Password">
+
+                    <div class="error-box" id="password-error-box"></div>
+
+                    <!-- <input class="user-input" type="password" id="password-confirm" placeholder="Confirm Password">
+
+                    <div class="error-box" id="password-confirm-error-box"></div> -->
+
+                    <div id="login-buttons">
+                        <input id="signup-signup-button" type="submit" value="Signup">
+                        <input id="signup-login-button" type="submit" value="Login">
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>
