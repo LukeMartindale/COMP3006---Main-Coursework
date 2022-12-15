@@ -1,4 +1,4 @@
-let mongoose = require("mongoose")
+let mongoose = require("mongoose");
 
 let UserSchema = new mongoose.Schema({
     username: String,

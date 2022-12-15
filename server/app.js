@@ -32,11 +32,9 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
-//Setup app routes
-app.get("/", routes.homePageTest)
-app.get("/:id/", routes.homePageTest, (request, response) => {
-    response.send(request.params)
-})
+//Route for home page
+app.get("/home-page/", [auth_verify_jwt.verifyToken], routes.homePage)
+
 
 //Routes for user auth functions
 app.get("/auth/login/", auth_routes.loginPage)
@@ -47,7 +45,17 @@ app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists], auth.SignU
 
 app.post("/auth/logout/", auth.LogOut)
 
+
+
+
+//TEST ROUTES
+//test home page
+app.get("/", routes.homePageTest)
+app.get("/:id/", routes.homePageTest, (request, response) => {
+    response.send(request.params)
+})
 //Check if user is logged in
 app.get("/auth/loggedin/", [auth_verify_jwt.verifyToken], auth_routes.LoggedIn)
+
 
 module.exports.app = app;

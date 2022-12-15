@@ -16,7 +16,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.href = "http://localhost:9000/auth/loggedin/"
+                window.location.href = "http://localhost:9000/home-page/"
             },
             error:  function(result){
                 if(result.responseJSON.message == 'User Not Found'){

@@ -1,5 +1,5 @@
 let config = require("../../config/auth.config.js")
-let User = require("../user.model").User;
+let User = require("../model.user").User;
 let jwt = require("jsonwebtoken")
 
 verifyToken = (request, response, next) => {
