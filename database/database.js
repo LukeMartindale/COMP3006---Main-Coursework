@@ -1,4 +1,4 @@
-let models = require("./model.user.js")
+let models = require("./models/model.user.js")
 
 async function getTest(test) {
     let filter = {};

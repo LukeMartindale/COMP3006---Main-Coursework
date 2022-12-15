@@ -1,4 +1,4 @@
-let User = require("../model.user").User;
+let User = require("../models/model.user").User;
 
 CheckIfUsernameExists = (request, response, next) => {
 

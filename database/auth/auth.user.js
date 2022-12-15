@@ -1,5 +1,5 @@
 let config = require("../../config/auth.config.js")
-let User = require("../model.user").User;
+let User = require("../models/model.user").User;
 
 let jwt = require("jsonwebtoken")
 let bcrypt = require("bcryptjs");
