@@ -16,6 +16,8 @@ let auth = require("../database/auth/auth.user");
 let auth_verify_signup = require("../database/auth/auth.verify.signup");
 let auth_verify_jwt = require("../database/auth/auth.verify.jwt");
 
+//Import requirements for create, add routes
+let group = require("../database/app/app.group");
 
 
 //Setup express app
@@ -32,7 +34,17 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
-//Route for home page
+
+
+//Route for the app
+app.get("/app/groups/", [auth_verify_jwt.verifyToken], routes.groupsPage)
+app.get("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], routes.creategroupPage)
+app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], group.CreateGroup)
+
+app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
+app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
+
+
 app.get("/home-page/", [auth_verify_jwt.verifyToken], routes.homePage)
 
 

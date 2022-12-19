@@ -16,7 +16,7 @@
         <!-- Load CSS for page -->
         <link rel="stylesheet" href="/css/base.css">
 
-        <title>Home Page</title>
+        <title>Friends</title>
 
     </head>
     <body>
@@ -25,16 +25,13 @@
 
             <div class="menu-wrapper">
                 <div class="menu-bar">
-                    <a href="#" class="menu-bar-widget" id="groups-button">
+                    <a href="http://localhost:9000/app/groups" class="menu-bar-widget" id="groups-button">
                         Groups
                     </a>
-                    <a href="#" class="menu-bar-widget" id="dm-button">
-                        Direct Messages
-                    </a>
-                    <a href="#" class="menu-bar-widget" id="friends-button">
+                    <a href="http://localhost:9000/app/friends" class="menu-bar-widget" id="friends-button">
                         Friends
                     </a>
-                    <a href="#" class="menu-bar-widget" id="requests-button">
+                    <a href="http://localhost:9000/app/notifications" class="menu-bar-widget" id="requests-button">
                         Notifications
                     </a>
                     <a href="#" class="menu-bar-widget" id="account-button">
@@ -51,7 +48,7 @@
                 <div class="chat-group">
                     <div class="chat-content">
                         <h2 class="group-title">
-                            Group Title
+                            Friend Name
                         </h2>
                     </div>
                 </div>
@@ -59,7 +56,7 @@
                 <div class="chat-group">
                     <div class="chat-content">
                         <h2 class="group-title">
-                            Group Title
+                            Friend Name
                         </h2>
                     </div>
                 </div>
@@ -67,31 +64,20 @@
                 <div class="chat-group">
                     <div class="chat-content">
                         <h2 class="group-title">
-                            Group Title
+                            Friend Name
                         </h2>
                     </div>
                 </div>
     
-                <div class="create-chat-group">
-                    <div class="create-chat-content">
-                        <h2 class="create-group-title">
-                            Create New Group +
+                <div class="create-wrapper">
+                    <div class="create-content">
+                        <h2 class="create-title">
+                            Add New Friend +
                         </h2>
                     </div>
                 </div>
 
             </div>
-
-            <h1>Home Page</h1>
-
-            <div>
-                <%= id %>
-            </div>
-    
-            <div>
-                <%= username %>
-            </div>
-
         </div>
 
     </body>
