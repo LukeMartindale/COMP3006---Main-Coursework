@@ -1,8 +1,15 @@
 let database = require("../../database/database")
+let jwt = require("jsonwebtoken")
+
+let User = require("../../database/models/model.user").User;
 
 async function homePage(request, response) {
 
-    response.render("home-page")
+    let user_id = jwt.decode(request.session.token).id
+    
+    user = await User.findById(user_id).exec()
+
+    response.render("home-page", {"id": user_id, "username": user.username})
 
 }
 
