@@ -8,4 +8,4 @@ let GroupSchema = new mongoose.Schema({
 
 let Group = mongoose.model("group", GroupSchema)
 
-module.exports.Group = Group
+module.exports.Group = Group;

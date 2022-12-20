@@ -45,29 +45,15 @@
 
             <div class="content">
 
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Group Title
-                        </h2>
+                <% for (i=0; i<groups.length; i++) { %>
+                    <div class="chat-group">
+                        <div class="chat-content">
+                            <h2 class="group-title">
+                                <%= groups[i].group_name %>
+                            </h2>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Group Title
-                        </h2>
-                    </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Group Title
-                        </h2>
-                    </div>
-                </div>
+                <% } %>
     
                 <a href="http://localhost:9000/app/groups/creategroup" class="create-wrapper">
                     <div class="create-content">
@@ -78,17 +64,6 @@
                 </a>
 
             </div>
-
-            <h1>Home Page</h1>
-
-            <div>
-                <%= id %>
-            </div>
-    
-            <div>
-                <%= username %>
-            </div>
-
         </div>
 
     </body>

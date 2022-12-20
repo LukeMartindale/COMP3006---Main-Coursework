@@ -2,15 +2,16 @@ let database = require("../../database/database")
 let jwt = require("jsonwebtoken")
 
 let User = require("../../database/models/model.user").User;
+let Group = require("../../database/models/model.group").Group;
 
 // App Routes
 async function groupsPage(request, response) {
 
     let user_id = jwt.decode(request.session.token).id
-    
-    user = await User.findById(user_id).exec()
 
-    response.render("app/groups-page", {"id": user_id, "username": user.username})
+    groups = await Group.find({ "group_members": { "$in": [user_id]}})
+
+    response.render("app/groups-page", {"id": user_id, "groups": groups})
 
 }
 

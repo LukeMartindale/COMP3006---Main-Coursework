@@ -14,7 +14,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                alert("Group Created")
+                window.location.href = "http://localhost:9000/app/groups"
             }
 
         })
