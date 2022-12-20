@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import Required JS Modules -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
+    <!-- Load Javascript for page -->
+    <script src="/javascript/app/chat-group.js"></script>
+
+    <!-- Load CSS for page -->
+    <link rel="stylesheet" href="/css/chat.css">
+    
+    <title>Group Chat</title>
+
+</head>
+<body>
+
+    <script>
+        const group_id = '<%= group_id %>'
+    </script>
+    
+    <div class="content-wrapper">
+
+        <h1>Group Page</h1>
+
+        <div class="message-wrapper">
+            <%= messages %>
+        </div>
+
+        <div class="input-wrapper">
+            <div class="input-bar">
+                <textarea id="chat-input"></textarea>
+                <!-- Emoji -->
+                <button id="emoji-button">
+                    <div class="bi bi-emoji-smile-fill" style="font-size: 22px;"></div>
+                </button>
+                <!-- Image -->
+                <button id="image-button">
+                    <div class="bi bi-image-fill" style="font-size: 22px;"></div>
+                </button>
+                <!-- Send -->
+                <button id="send-button">
+                    <div class="bi bi-send-fill" style="font-size: 22px;"></div>
+                </button>
+                
+            </div>
+        </div>
+
+    </div>
+    
+</body>
+</html>

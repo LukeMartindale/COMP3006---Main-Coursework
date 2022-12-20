@@ -4,7 +4,7 @@ let MessageSchema = new mongoose.Schema({
     text: String,
     sentOn: Date,
     groupId: String,
-    senderUsername: String,
+    senderId: String,
 });
 
 let Message = mongoose.model("message", MessageSchema)

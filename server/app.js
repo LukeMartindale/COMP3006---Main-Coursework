@@ -4,6 +4,7 @@ let path = require("path");
 
 //Import Routes
 let routes = require("./routes/routes");
+let chat_routes = require("./routes/chat.routes")
 let auth_routes = require("./routes/auth.routes");
 
 //Import app use requirements
@@ -44,9 +45,9 @@ app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], group.Create
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
 
-
-app.get("/home-page/", [auth_verify_jwt.verifyToken], routes.homePage)
-
+//Route for chats
+app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], chat_routes.groupchatPage)
+app.post("/chat/group/", [auth_verify_jwt.verifyToken], group.SendTextMessage)
 
 //Routes for user auth functions
 app.get("/auth/login/", auth_routes.loginPage)
@@ -62,6 +63,7 @@ app.post("/auth/logout/", auth.LogOut)
 
 //TEST ROUTES
 //test home page
+app.get("/home-page/", [auth_verify_jwt.verifyToken], routes.homePage)
 app.get("/", routes.homePageTest)
 app.get("/:id/", routes.homePageTest, (request, response) => {
     response.send(request.params)

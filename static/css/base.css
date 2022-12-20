@@ -79,6 +79,7 @@ body {
     margin-bottom: 25px;
     cursor: pointer;
     transform: skew(-10deg);
+    text-decoration: none;
 }
 
 .chat-content {
@@ -123,4 +124,3 @@ body {
     font-size: 64px;
     margin: 0;
 }
-
