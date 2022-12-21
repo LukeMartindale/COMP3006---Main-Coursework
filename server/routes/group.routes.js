@@ -18,8 +18,18 @@ async function groupchatPage(request, response) {
     let messages = await Message.find({ "groupId": group_id});
     let group = await Group.findOne({ "_id": group_id });
 
-    response.render("app/chat-group-page", {"messages": messages, "group": group, "user": user, "user_id": user_id});
+    response.render("app/groups-chat-page", {"messages": messages, "group": group, "user": user, "user_id": user_id});
+
+}
+
+async function groupchatsettingsPage(request, response) {
+
+    let group_id = request.params.id;
+    let group = await Group.findOne({ "_id": group_id });
+
+    response.render("app/groups-settings-page.ejs", {"group": group})
 
 }
 
 module.exports.groupchatPage = groupchatPage;
+module.exports.groupchatsettingsPage = groupchatsettingsPage;

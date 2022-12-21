@@ -30,7 +30,7 @@ async function notificationsPage(request, response) {
 // Create, Add & Update Routes
 async function creategroupPage(request, response) {
 
-    response.render("app/create-group-page")
+    response.render("app/groups-create-page")
 
 }
 

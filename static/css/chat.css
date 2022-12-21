@@ -78,7 +78,14 @@ body {
 }
 
 .bi-gear-fill {
-    font-size: 34px;
+    font-size: 36px;
+    color: #fefefe;
+    text-decoration: none;
+}
+
+.bi-gear-fill:hover {
+    color: #fefefe;
+    text-decoration: none;
 }
 
 .message-wrapper {

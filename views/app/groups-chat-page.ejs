@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <!-- Load Javascript for page -->
-    <script src="/javascript/app/chat-group.js"></script>
+    <script src="/javascript/app/groups-chat.js"></script>
 
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/chat.css">
@@ -36,7 +36,7 @@
                 <h1 style="align-self: center;"><%= group.group_name %></h1>
             </div>
             <div class="header-bar-options">
-                <div class="bi bi-gear-fill"></div>
+                <a href="http://localhost:9000/chat/group/<%= group._id %>/settings" class="bi bi-gear-fill"></a>
             </div>
         </div>
     </div>
