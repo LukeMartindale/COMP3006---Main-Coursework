@@ -6,6 +6,7 @@ let path = require("path");
 let routes = require("./routes/routes");
 let group_routes = require("./routes/group.routes");
 let friends_routes = require("./routes/friend.routes");
+let notification_routes = require("./routes/notification.routes");
 let auth_routes = require("./routes/auth.routes");
 
 //Import app use requirements
@@ -46,9 +47,10 @@ app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], group.Create
 
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_routes.addfriendPage)
-app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists], friend.InviteFriend)
+app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists, friend.CheckIfAlreadyFriends], friend.InviteFriend)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
+app.post("/app/notifications/", [auth_verify_jwt.verifyToken], notification_routes.requestResponse)
 
 //Route for chats
 app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)

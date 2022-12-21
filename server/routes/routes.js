@@ -3,6 +3,7 @@ let jwt = require("jsonwebtoken")
 
 let User = require("../../database/models/model.user").User;
 let Group = require("../../database/models/model.group").Group;
+let Requests = require("../../database/models/model.request").Request;
 
 // App Routes
 async function groupsPage(request, response) {
@@ -23,7 +24,11 @@ async function friendsPage(request, response) {
 
 async function notificationsPage(request, response) {
 
-    response.render("app/notifications-page")
+    let user_id = jwt.decode(request.session.token).id
+
+    notifications = await Requests.find({"recipientId": user_id, "status": "pending"}).exec()
+
+    response.render("app/notifications-page", {"notifications": notifications})
 
 }
 

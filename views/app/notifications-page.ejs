@@ -10,11 +10,15 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
         <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+
         <!-- Load Javascript for page -->
-        <script src="/javascript/auth/logout.js"></script>
+        <script src="/javascript/app/notifications.js"></script>
 
         <!-- Load CSS for page -->
         <link rel="stylesheet" href="/css/base.css">
+        <link rel="stylesheet" href="/css/notifications.css">
 
         <title>Notifications</title>
 
@@ -45,29 +49,53 @@
 
             <div class="content">
 
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Notification
-                        </h2>
+                <% if(notifications.length > 0) { %>
+                    <% for (i=0; i<notifications.length; i++) { %>
+
+                        <div class="notification-cell">
+                            <div class="notification-content">
+                                <div class="notification-info">
+                                    <h2 class="notification-title">
+                                        <%= notifications[i].senderUsername %>
+                                    </h2>
+                                    <h3 class="notification-sub-title"><%= notifications[i].type %></h3>
+                                </div>
+                                <div class="notification-controls">
+
+                                    <% if(notifications[i].responseRequired) { %>
+
+                                        <div id="<%= notifications[i]._id %>" class="notification-accept">
+                                            <div class="bi bi-check2-circle"></div>
+                                        </div>
+
+                                        <div id="<%= notifications[i]._id %>" class="notification-decline">
+                                            <div class="bi bi-x"></div>
+                                        </div>
+
+                                    <% } else { %>
+
+                                        <div id="<%= notifications[i]._id %>" class="notification-decline">
+                                            <div class="bi bi-x"></div>
+                                        </div>
+
+                                    <% } %>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                    <% } %>
+                <% } else { %>
+
+                    <div class="create-wrapper">
+                        <div class="create-content">
+                            <h2 class="create-title">
+                                No Notifications
+                            </h2>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Notification
-                        </h2>
-                    </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Notification
-                        </h2>
-                    </div>
-                </div>
+
+                <% } %>
 
             </div>
         </div>

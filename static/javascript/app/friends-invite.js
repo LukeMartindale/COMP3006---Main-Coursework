@@ -14,7 +14,7 @@ function inviteFriend(){
             console.log("Friend Request Sent!")
         },
         error: function(result){
-            console.log(error)
+            console.log(result)
         }
     })
 

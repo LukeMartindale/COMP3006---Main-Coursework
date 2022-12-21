@@ -19,7 +19,7 @@ function sendMessage() {
                 console.log("Message Sent!")
             },
             error: function(result){
-                console.log(error)
+                console.log(result)
             }
         });
     }
