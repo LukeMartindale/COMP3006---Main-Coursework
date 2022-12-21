@@ -14,6 +14,123 @@ body {
     flex-direction: column;
 }
 
+.header-wrapper {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D92323;
+    height: 120px;
+    width: 100vw;
+    z-index: 1000;
+    top: 0;
+}
+
+
+.header-bar {
+    width: 960px;
+    min-height: 50px;
+    border: solid 4px #0D0D0D;
+    background-color: #fefefe;
+    color: #0D0D0D;
+    transform: skew(-10deg);
+    padding: 2px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.header-bar-title {
+    border: solid 2px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    width: 90%;
+    height: 100%;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.header-bar-options {
+    border: solid 2px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    width: 10%;
+    height: 100%;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.bi-gear-fill {
+    font-size: 34px;
+}
+
+.message-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 120px;
+    margin-bottom: 120px;
+}
+
+.user-message {
+    align-self: flex-end;
+    border: solid 4px #0D0D0D;
+    background-color: #fefefe;
+    color: #0D0D0D;
+    transform: skew(5deg);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    max-width: 45%;
+    text-align: justify;
+}
+
+.user-message-content {
+    padding: 5px;
+}
+
+.message-text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.group-message {
+    align-self: flex-end;
+    border: solid 4px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    transform: skew(-5deg);
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    max-width: 45%;
+    text-align: justify;
+}
+
+.group-message-content {
+    padding: 5px;
+}
+
+.group-message {
+    align-self: flex-start;
+}
+
 .input-wrapper {
     position: fixed;
     background-color: #D92323;

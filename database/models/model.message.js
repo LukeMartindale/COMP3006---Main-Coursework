@@ -5,6 +5,7 @@ let MessageSchema = new mongoose.Schema({
     sentOn: Date,
     groupId: String,
     senderId: String,
+    senderUsername: String,
 });
 
 let Message = mongoose.model("message", MessageSchema)

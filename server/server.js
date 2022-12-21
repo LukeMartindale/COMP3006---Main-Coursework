@@ -35,6 +35,12 @@ io.on("connection", function(socket) {
         socket.broadcast.emit("RECIEVED", msg)
     })
 
+    socket.on("Send Group Message", function(message) {
+
+        socket.broadcast.emit("Group-Message:" + message.group_id, message)
+        
+    });
+
 });
 
 //Set server to listen on port 9000

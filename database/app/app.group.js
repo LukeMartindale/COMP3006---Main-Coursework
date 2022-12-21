@@ -29,6 +29,7 @@ SendTextMessage = (request, response) => {
         sentOn: new Date(),
         groupId: request.body.groupId,
         senderId: jwt.decode(request.session.token).id,
+        senderUsername: request.body.senderUsername,
     })
 
     message.save((error, message) => {

@@ -10,9 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <!-- Load Javascript for page -->
     <script src="/javascript/app/chat-group.js"></script>
@@ -26,15 +26,40 @@
 <body>
 
     <script>
-        const group_id = '<%= group_id %>'
+        const group_id = '<%= group._id %>';
+        const username = '<%= user.username %>';
     </script>
+
+    <div class="header-wrapper">
+        <div class="header-bar">
+            <div class="header-bar-title">
+                <h1 style="align-self: center;"><%= group.group_name %></h1>
+            </div>
+            <div class="header-bar-options">
+                <div class="bi bi-gear-fill"></div>
+            </div>
+        </div>
+    </div>
     
     <div class="content-wrapper">
 
-        <h1>Group Page</h1>
-
         <div class="message-wrapper">
-            <%= messages %>
+            <% for (i=0; i<messages.length; i++) { %>
+                <% if(messages[i].senderId == user_id) { %>
+                    <div class="user-message">
+                        <div class="user-message-content">
+                            <p class="message-text"><%= messages[i].text %></p>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="group-message">
+                        <div class="group-message-content">
+                            <h4><%= messages[i].senderUsername %></h4>
+                            <p class="message-text"><%= messages[i].text %></p>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
         </div>
 
         <div class="input-wrapper">
