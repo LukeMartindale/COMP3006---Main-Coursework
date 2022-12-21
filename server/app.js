@@ -5,7 +5,7 @@ let path = require("path");
 //Import Routes
 let routes = require("./routes/routes");
 let group_routes = require("./routes/group.routes");
-let friends_routes = require("./routes//friend.routes");
+let friends_routes = require("./routes/friend.routes");
 let auth_routes = require("./routes/auth.routes");
 
 //Import app use requirements
@@ -20,6 +20,7 @@ let auth_verify_jwt = require("../database/auth/auth.verify.jwt");
 
 //Import requirements for create, add routes
 let group = require("../database/app/app.group");
+let friend = require("../database/app/app.friend")
 
 
 //Setup express app
@@ -45,6 +46,7 @@ app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], group.Create
 
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_routes.addfriendPage)
+app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists], friend.InviteFriend)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
 

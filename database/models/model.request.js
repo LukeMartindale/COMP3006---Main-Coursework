@@ -1,9 +1,13 @@
 let mongoose = require("mongoose");
 
 let RequestSchema = new mongoose.Schema({
-    sender: String,
-    recipient: String,
+    senderId: String,
+    recipientId: String,
     type: String,
     sentOn: Date,
     status: String,
 });
+
+let Request = mongoose.model("request", RequestSchema)
+
+module.exports.Request = Request;
