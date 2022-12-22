@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded())
 //Route for the app
 app.get("/app/groups/", [auth_verify_jwt.verifyToken], routes.groupsPage)
 app.get("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], routes.creategroupPage)
-app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken], group.CreateGroup)
+app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken, group.CheckGroupNameNotEmpty], group.CreateGroup)
 
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_routes.addfriendPage)
