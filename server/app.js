@@ -53,6 +53,8 @@ app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.Check
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
 app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup], notification_routes.requestResponse)
 
+app.get("/app/account", [auth_verify_jwt.verifyToken], routes.accountPage)
+
 //Route for chats
 app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)
 app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)

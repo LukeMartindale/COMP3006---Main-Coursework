@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import Required JS Modules -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
+
+    <!-- Load CSS for page -->
+    <link rel="stylesheet" href="/css/account.css">
+
+    <title>Account</title>
+
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="account-box">
+
+            <h1 class="title"><%= user.username %></h1>
+
+            <div class="account-content">
+                <h3 class="sub-title">Account ID</h3>
+                <p class="account-text"><%= user._id %></p>
+            </div>
+
+        </div>
+    </div>
+    
+</body>
+</html>

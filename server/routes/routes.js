@@ -36,6 +36,14 @@ async function notificationsPage(request, response) {
 
 }
 
+async function accountPage(request, response) {
+
+    let user = await User.findById(jwt.decode(request.session.token).id).select(["-password"])
+
+    response.render("app/account-page", {"user": user})
+
+}
+
 // Create, Add & Update Routes
 async function creategroupPage(request, response) {
 
@@ -63,6 +71,7 @@ async function homePageTest(request, response) {
 module.exports.groupsPage = groupsPage;
 module.exports.friendsPage = friendsPage;
 module.exports.notificationsPage = notificationsPage;
+module.exports.accountPage = accountPage;
 
 module.exports.creategroupPage = creategroupPage;
 
