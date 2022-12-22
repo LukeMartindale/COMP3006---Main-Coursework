@@ -66,7 +66,7 @@ app.get("/auth/login/", auth_routes.loginPage)
 app.post("/auth/login/", auth.LogIn)
 
 app.get("/auth/signup/", auth_routes.signupPage)
-app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists], auth.SignUp)
+app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists, auth_verify_signup.CheckUsernameNotEmpty], auth.SignUp)
 
 app.post("/auth/logout/", auth.LogOut)
 

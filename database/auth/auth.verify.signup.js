@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 let User = require("../models/model.user").User;
 
 CheckIfUsernameExists = (request, response, next) => {
@@ -20,8 +22,19 @@ CheckIfUsernameExists = (request, response, next) => {
 
 }
 
+CheckUsernameNotEmpty = (request, response, next) => {
+
+    if(request.body.username == ""){
+        response.status(400).send({"message": "Username cannot be empty!"})
+        return;
+    }
+    
+    next()
+}
+
 let verifySignUp = {
-    CheckIfUsernameExists
+    CheckIfUsernameExists,
+    CheckUsernameNotEmpty
 }
 
 module.exports = verifySignUp;
