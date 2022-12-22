@@ -21,7 +21,8 @@ let auth_verify_jwt = require("../database/auth/auth.verify.jwt");
 
 //Import requirements for create, add routes
 let group = require("../database/app/app.group");
-let friend = require("../database/app/app.friend")
+let friend = require("../database/app/app.friend");
+let notification = require("../database/app/app.notification");
 
 
 //Setup express app
@@ -50,13 +51,13 @@ app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_rout
 app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists, friend.CheckIfAlreadyFriends], friend.InviteFriend)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
-app.post("/app/notifications/", [auth_verify_jwt.verifyToken], notification_routes.requestResponse)
+app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup], notification_routes.requestResponse)
 
 //Route for chats
 app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)
 app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)
 app.post("/chat/group/", [auth_verify_jwt.verifyToken], group.SendTextMessage)
-app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken], group.InviteFriendToGroup)
+app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlreadyInGroup], group.InviteFriendToGroup)
 
 //Routes for user auth functions
 app.get("/auth/login/", auth_routes.loginPage)

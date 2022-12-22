@@ -32,8 +32,6 @@ $(function(){
             alert("Blank")
         }
 
-        alert(temp)
-
     });
 
 });

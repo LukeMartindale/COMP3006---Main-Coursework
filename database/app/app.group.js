@@ -71,9 +71,14 @@ InviteFriendToGroup = async (request, response) => {
 
 }
 
-CheckIfAlreadyInGroup = async(request, response) => {
+CheckIfAlreadyInGroup = async(request, response, next) => {
 
-    
+    let group = await Group.findById(request.body.groupId).exec()
+    if(group.group_members.includes(request.body.recipientId)){
+        response.status(400).send({"Message": "User is already in group"});
+        return;
+    }
+    next()
 
 }
 
@@ -81,6 +86,7 @@ let group = {
     CreateGroup,
     SendTextMessage,
     InviteFriendToGroup,
+    CheckIfAlreadyInGroup,
 }
 
 module.exports = group
