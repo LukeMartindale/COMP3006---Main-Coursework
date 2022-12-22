@@ -9,8 +9,6 @@ let mongoose = require("mongoose");
 
 CreateGroup = (request, response) => {
 
-    console.log(request.body.group_name)
-
     let group = new Group({
         group_name: request.body.group_name,
         group_admin: jwt.decode(request.session.token).id,
@@ -87,7 +85,6 @@ CheckIfAlreadyInGroup = async(request, response, next) => {
 CheckGroupNameNotEmpty = async(request, response, next) => {
 
     if(request.body.group_name == ""){
-        console.log("Group Name Empty")
         response.status(400).send({"message": "Group name cannot be empty!"});
         return;
     }

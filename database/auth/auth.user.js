@@ -6,9 +6,6 @@ let bcrypt = require("bcryptjs");
 
 SignUp = (request, response) => {
 
-    console.log(request.body)
-    console.log(request.body.password)
-
     let user = new User({
         username: request.body.username,
         password: bcrypt.hashSync(request.body.password, 8),

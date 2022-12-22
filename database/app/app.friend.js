@@ -36,7 +36,6 @@ CheckFriendExists = async (request, response, next) => {
     let recipientId = request.body.recipientId
 
     if(mongoose.Types.ObjectId.isValid(recipientId)){
-        console.log("Valid")
         let user = await User.findById(mongoose.Types.ObjectId(recipientId)).exec();
 
         if(!user){
@@ -53,8 +52,6 @@ CheckIfAlreadyFriends = async (request, response, next) => {
 
     let user_id = jwt.decode(request.session.token).id
     let recipientId = request.body.recipientId
-
-    console.log(recipientId)
 
     user = await User.findById(user_id).exec()
 
