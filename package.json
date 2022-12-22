@@ -22,7 +22,7 @@
     "socket.io": "^4.5.4"
   },
   "scripts": {
-    "test": "mocha -ui tdd test/",
+    "test": "mocha -ui tdd tests/",
     "start": "node server.js"
   }
 }
