@@ -1,4 +1,11 @@
 {
+  "name": "slant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
@@ -12,5 +19,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.8.0",
     "socket.io": "^4.5.4"
+  },
+  "scripts": {
+    "test": "mocha -ui tdd test/",
+    "start": "node server.js"
   }
 }
