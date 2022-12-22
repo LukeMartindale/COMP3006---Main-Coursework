@@ -47,7 +47,19 @@
     margin: 0;
 }
 
-.notification-accept {
+.notification-friend-accept {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    background-color: #7CFC00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.notification-group-accept {
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -63,7 +75,19 @@
     font-size: 80px;
 }
 
-.notification-decline {
+.notification-friend-decline {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    padding: 5px;
+    background-color: #880808;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.notification-group-decline {
     border-radius: 50%;
     width: 100px;
     height: 100px;

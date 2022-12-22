@@ -56,6 +56,7 @@ app.post("/app/notifications/", [auth_verify_jwt.verifyToken], notification_rout
 app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)
 app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)
 app.post("/chat/group/", [auth_verify_jwt.verifyToken], group.SendTextMessage)
+app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken], group.InviteFriendToGroup)
 
 //Routes for user auth functions
 app.get("/auth/login/", auth_routes.loginPage)
@@ -65,7 +66,6 @@ app.get("/auth/signup/", auth_routes.signupPage)
 app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists], auth.SignUp)
 
 app.post("/auth/logout/", auth.LogOut)
-
 
 
 

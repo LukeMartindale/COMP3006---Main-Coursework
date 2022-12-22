@@ -5,6 +5,7 @@ let RequestSchema = new mongoose.Schema({
     senderUsername: String,
     recipientId: String,
     type: String,
+    groupId: String,
     sentOn: Date,
     status: String,
     responseRequired: Boolean,

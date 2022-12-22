@@ -45,29 +45,15 @@
 
             <div class="content">
 
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Friend Name
-                        </h2>
+                <% for(i=0; i<friends.length; i++) { %>
+                    <div class="chat-group">
+                        <div class="chat-content">
+                            <h2 class="group-title">
+                                <%= friends[i].username %>
+                            </h2>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Friend Name
-                        </h2>
-                    </div>
-                </div>
-    
-                <div class="chat-group">
-                    <div class="chat-content">
-                        <h2 class="group-title">
-                            Friend Name
-                        </h2>
-                    </div>
-                </div>
+                <% } %>
     
                 <a href="http://localhost:9000/app/friends/invitefriend" class="create-wrapper">
                     <div class="create-content">

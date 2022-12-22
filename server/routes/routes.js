@@ -18,7 +18,11 @@ async function groupsPage(request, response) {
 
 async function friendsPage(request, response) {
 
-    response.render("app/friends-page")
+    let user = await User.findById(jwt.decode(request.session.token).id).select(['-password']).exec();
+
+    let friends = await User.find({"friends": {"$in": [user._id]}}).select(['-password', '-friends', '-__v']);
+
+    response.render("app/friends-page", {"friends": friends})
 
 }
 

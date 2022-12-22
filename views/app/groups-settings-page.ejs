@@ -10,6 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
+    <!-- Load Javascript for page -->
+    <script src="/javascript/app/groups-settings.js"></script>
+
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/settings.css">
 
@@ -18,29 +21,32 @@
 </head>
 <body>
 
+    <script>
+        const group_id = '<%= group._id %>'
+    </script>
+
     <div class="content-wrapper">
         <div class="settings-box">
 
             <h1 class="title"><%= group.group_name %> Settings</h1>
 
-            <!-- <div class="update-content">
-
-                <h3 class="sub-title">Group Name:</h3>
-                <input id="create-group" class="user-input" type="text" placeholder="Update Group Name">
-
-                <input id="update-button" type="submit" value="Update Group">
-
-            </div> -->
-
             <div class="member-content">
 
-                <h3 class="sub-title">Invite New Member:</h3>
-                <input id="invite-member" class="user-input" type="text" placeholder="Member Id">
+                <% if(friends.length>0) { %>
+                    <h3 class="sub-title">Invite New Member:</h3>
+                    <select name="member" id="member-select" class="user-input">
+                        <option value="blank"></option>
+                        <% for(i=0; i<friends.length; i++) { %>
+                            <option value='<%= friends[i]._id %>'><%= friends[i].username %></option>
+                        <% } %>
+                    </select>
 
-                <div class="button-wrapper">
-                    <input id="invite-button" type="submit" value="Invite Id">
-                    <button id="friend-invite-button">Invite Friend</button>
-                </div>
+                    <div class="button-wrapper">
+                        <button id="invite-button">Invite Friend</button>
+                    </div>
+                <% } else { %>
+                    <h1>You've got now friends</h1>
+                <% } %>
 
             </div>
 

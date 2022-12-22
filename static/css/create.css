@@ -39,7 +39,7 @@ body {
     margin-bottom: 12px;
 }
 
-.update-content {
+.create-content {
     display: flex;
     flex-direction: column;
     align-items: center;
