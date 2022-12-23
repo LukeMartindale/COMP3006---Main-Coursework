@@ -50,7 +50,7 @@ body {
     border: solid 2px #fefefe;
     background-color: #0D0D0D;
     color: #fefefe;
-    width: 90%;
+    width: 80%;
     height: 100%;
     padding: 2px;
     display: flex;
@@ -84,6 +84,29 @@ body {
 }
 
 .bi-gear-fill:hover {
+    color: #fefefe;
+    text-decoration: none;
+}
+
+.back-button {
+    border: solid 2px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    width: 10%;
+    height: 100%;
+    padding: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.bi-arrow-left-circle-fill {
+    font-size: 36px;
     color: #fefefe;
     text-decoration: none;
 }

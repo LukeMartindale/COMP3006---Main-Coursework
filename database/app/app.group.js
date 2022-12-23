@@ -3,7 +3,7 @@ let Message = require("../models/model.message").Message;
 let Request = require("../models/model.request").Request;
 let User = require("../models/model.user").User;
 
-const { request } = require("express");
+const { request, response } = require("express");
 let jwt = require("jsonwebtoken");
 let mongoose = require("mongoose");
 
@@ -69,7 +69,20 @@ InviteFriendToGroup = async (request, response) => {
         response.status(200).send({"message": "Group Invite Sent!"})
     });
 
-}
+};
+
+LeaveGroup = async (request, response) => {
+
+    let user_id = jwt.decode(request.session.token).id;
+    let group = await Group.findById(request.body.groupId);
+
+    group.group_members = group.group_members.filter(e => e != user_id)
+
+    group.save()
+
+    response.status(200).send({"message": "Group left!"})
+
+};
 
 CheckIfAlreadyInGroup = async(request, response, next) => {
 
@@ -100,6 +113,7 @@ let group = {
     CreateGroup,
     SendTextMessage,
     InviteFriendToGroup,
+    LeaveGroup,
     CheckIfAlreadyInGroup,
     CheckGroupNameNotEmpty
 }

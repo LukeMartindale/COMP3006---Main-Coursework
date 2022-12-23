@@ -60,6 +60,7 @@ app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupcha
 app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)
 app.post("/chat/group/", [auth_verify_jwt.verifyToken], group.SendTextMessage)
 app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlreadyInGroup], group.InviteFriendToGroup)
+app.post("/chat/group/leave/", [auth_verify_jwt.verifyToken], group.LeaveGroup)
 
 //Routes for user auth functions
 app.get("/auth/login/", auth_routes.loginPage)

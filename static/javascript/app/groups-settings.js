@@ -4,7 +4,6 @@ $(function(){
     $("#invite-button").click(function(){
 
         invite_url = "http://localhost:9000/chat/group/invite"
-        console.log(group_id)
 
         let value = $('#member-select').find(":selected").val();
         if(value != "blank"){
@@ -21,16 +20,43 @@ $(function(){
                     console.log("Success")
                 },
                 error: function(result){
-                    console.log(result)
+                    if(result.responseJSON.message == "User is already in group!"){
+                        $(".error-box").empty().append(result.responseJSON.message)
+                    }
                 }
 
             });
-
-            alert("Not Blank")
         } else {
-
-            alert("Blank")
+            $(".error-box").empty().append("Please select a friend to invite!")
         }
+
+    });
+
+    $("#leave-button").click(function(){
+
+        leave_url = "http://localhost:9000/chat/group/leave"
+
+        $.ajax({
+            url: leave_url,
+            type: 'POST',
+            data: {
+                "groupId": group_id,
+            },
+            datatype: 'json',
+            success: function(result){
+                window.location.replace("http://localhost:9000/app/groups")
+            },
+            error: function(result){
+                console.log(result)
+            }
+
+        })
+
+    });
+
+    $("#back-button").click(function(){
+
+        window.location.href = "http://localhost:9000/chat/group/" + group_id
 
     });
 
