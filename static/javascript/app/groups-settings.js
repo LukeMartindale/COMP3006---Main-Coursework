@@ -1,3 +1,5 @@
+let socket = io("http://localhost:9000");
+
 $(function(){
     
 
@@ -17,10 +19,14 @@ $(function(){
                 },
                 datatype: 'json',
                 success: function(result){
-                    console.log("Success")
+                    $(".error-box").empty().append("Invite to group sent")
+                    socket.emit("Group Invite Sent", {"recipientId": value, "groupId": group_id})
                 },
                 error: function(result){
                     if(result.responseJSON.message == "User is already in group!"){
+                        $(".error-box").empty().append(result.responseJSON.message)
+                    }
+                    if(result.responseJSON.message == "User has already been invited!"){
                         $(".error-box").empty().append(result.responseJSON.message)
                     }
                 }

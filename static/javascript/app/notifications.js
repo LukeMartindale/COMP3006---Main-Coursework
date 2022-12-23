@@ -13,6 +13,7 @@ $(function(){
             datatype: 'json',
             success: function(result){
                 console.log(result)
+                location.reload()
             },
             error: function(result){
                 console.log(result)
@@ -42,6 +43,7 @@ $(function(){
             datatype: 'json',
             success: function(result){
                 console.log(result)
+                location.reload()
             },
             error: function(result){
                 console.log(result)

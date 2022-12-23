@@ -53,10 +53,25 @@ CheckIfAlreadyFriends = async (request, response, next) => {
     let user_id = jwt.decode(request.session.token).id
     let recipientId = request.body.recipientId
 
-    user = await User.findById(user_id).exec()
+    let user = await User.findById(user_id).exec()
 
     if(user.friends.includes(mongoose.Types.ObjectId(recipientId))){
         response.status(400).send({"Message":"Already Friends"})
+    } else {
+        next()
+    }
+
+}
+
+CheckIfAlreadySentFriendRequest = async (request, response, next) => {
+
+    let user_id = jwt.decode(request.session.token).id
+    let recipientId = request.body.recipientId
+
+    let user_request = await Request.findOne({"senderId": user_id, "recipientId": recipientId})
+
+    if(user_request) {
+        response.status(400).send({"message":"Already sent friend request to this user!"})
     } else {
         next()
     }
@@ -67,6 +82,7 @@ let friend = {
     InviteFriend,
     CheckFriendExists,
     CheckIfAlreadyFriends,
+    CheckIfAlreadySentFriendRequest,
 }
 
 module.exports = friend

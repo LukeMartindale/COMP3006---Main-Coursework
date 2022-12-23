@@ -12,14 +12,20 @@
 
         <!-- Load Javascript for page -->
         <script src="/javascript/auth/logout.js"></script>
+        <script src="/javascript/app/alerts.js"></script>
 
         <!-- Load CSS for page -->
         <link rel="stylesheet" href="/css/base.css">
+        <link rel="stylesheet" href="/css/alert.css">
 
         <title>Groups</title>
 
     </head>
     <body>
+
+        <script>
+            const USER_ID = '<%= id %>'
+        </script>
 
         <div class="content-wrapper">
 
@@ -27,12 +33,15 @@
                 <div class="menu-bar">
                     <a href="http://localhost:9000/app/groups" class="menu-bar-widget" id="groups-button">
                         Groups
+                        <div class="alert-counter no-alerts">12</div>
                     </a>
                     <a href="http://localhost:9000/app/friends" class="menu-bar-widget" id="friends-button">
                         Friends
+                        <div class="alert-counter no-alerts">12</div>
                     </a>
                     <a href="http://localhost:9000/app/notifications" class="menu-bar-widget" id="requests-button">
                         Notifications
+                        <div class="alert-counter no-alerts">12</div>
                     </a>
                     <a href="http://localhost:9000/app/account" class="menu-bar-widget" id="account-button">
                         Account
@@ -44,6 +53,8 @@
             </div>
 
             <div class="content">
+
+                <!-- <div class="alert-box no-alerts" id="alerts-box"></div> -->
 
                 <% for (i=0; i<groups.length; i++) { %>
                     <a href="http://localhost:9000/chat/group/<%= groups[i]._id %>" class="chat-group">

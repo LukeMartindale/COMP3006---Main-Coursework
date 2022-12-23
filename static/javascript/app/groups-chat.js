@@ -5,7 +5,9 @@ function sendMessage() {
     let send_url = "http://localhost:9000/chat/group/"
     let user_text = $("#chat-input").val()
 
-    if(user_text){
+    console.log(user_text.length > 0)
+
+    if(user_text.length > 0){
         $.ajax({
             url: send_url,
             type: 'POST',
@@ -22,14 +24,17 @@ function sendMessage() {
                 console.log(result)
             }
         });
+
+        socket.emit("Send Group Message", {"text": user_text, "senderUsername": username, "group_id": group_id})
+
+        $(".message-wrapper").append(
+            "<div class=\"user-message\"><div class=\"user-message-content\"><p class=\"message-text\">" + user_text + "</p></div></div>")
+    
+        $('html, body').scrollTop($(document).height());
+
     }
 
-    socket.emit("Send Group Message", {"text": user_text, "senderUsername": username, "group_id": group_id})
 
-    $(".message-wrapper").append(
-        "<div class=\"user-message\"><div class=\"user-message-content\"><p class=\"message-text\">" + user_text + "</p></div></div>")
-
-    $('html, body').scrollTop($(document).height());
 
 }
 

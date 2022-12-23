@@ -65,3 +65,7 @@ body {
     cursor: pointer;
     margin-bottom: 5px;
 }
+
+.error-box {
+    margin-bottom: 10px;
+}

@@ -34,6 +34,7 @@ SendTextMessage = (request, response) => {
         groupId: request.body.groupId,
         senderId: jwt.decode(request.session.token).id,
         senderUsername: request.body.senderUsername,
+        type: 'group-message',
     })
 
     message.save((error, message) => {
@@ -106,7 +107,26 @@ CheckGroupNameNotEmpty = async(request, response, next) => {
 }
 
 CheckMessageNotEmpty = async(request, response, next) => {
+
+    if(request.body.text == ""){
+        response.status(400).send({"message": "Cannot send an empty message!"})
+    } else {
+        next()
+    }
     
+}
+
+CheckNotAlreadyInvited = async(request, response, next) => {
+
+    let user_request = await Request.findOne({groupId: request.body.groupId, recipientId: request.body.recipientId, status: 'pending'}).exec()
+
+    if(user_request){
+        response.status(400).send({"message": "User has already been invited!"})
+
+    } else {
+        next()
+    }
+
 }
 
 let group = {
@@ -115,7 +135,9 @@ let group = {
     InviteFriendToGroup,
     LeaveGroup,
     CheckIfAlreadyInGroup,
-    CheckGroupNameNotEmpty
+    CheckGroupNameNotEmpty,
+    CheckNotAlreadyInvited,
+    CheckMessageNotEmpty,
 }
 
 module.exports = group

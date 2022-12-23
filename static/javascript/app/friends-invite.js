@@ -1,3 +1,5 @@
+let socket = io("http://localhost:9000");
+
 function inviteFriend(){
 
     let invite_url = "http://localhost:9000/app/friends/invitefriend"
@@ -11,13 +13,15 @@ function inviteFriend(){
         },
         datatype: 'json',
         success: function(result){
-            console.log("Friend Request Sent!")
+            socket.emit("Friend Request Sent", {"friendId": friend_id})
         },
         error: function(result){
-            console.log(result)
+            if(result.responseJSON.message == "Already sent friend request to this user!"){
+                $(".error-box").empty().append("Already sent friend request to this user!")
+            }
+
         }
     })
-
 
 }
 

@@ -23,6 +23,7 @@ let auth_verify_jwt = require("../database/auth/auth.verify.jwt");
 let group = require("../database/app/app.group");
 let friend = require("../database/app/app.friend");
 let notification = require("../database/app/app.notification");
+const { CheckMessageNotEmpty } = require("../database/app/app.group");
 
 
 //Setup express app
@@ -48,7 +49,7 @@ app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken, group.CheckGr
 
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_routes.addfriendPage)
-app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists, friend.CheckIfAlreadyFriends], friend.InviteFriend)
+app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists, friend.CheckIfAlreadyFriends, friend.CheckIfAlreadySentFriendRequest], friend.InviteFriend)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
 app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup], notification_routes.requestResponse)
@@ -58,8 +59,8 @@ app.get("/app/account", [auth_verify_jwt.verifyToken], routes.accountPage)
 //Route for chats
 app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)
 app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)
-app.post("/chat/group/", [auth_verify_jwt.verifyToken], group.SendTextMessage)
-app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlreadyInGroup], group.InviteFriendToGroup)
+app.post("/chat/group/", [auth_verify_jwt.verifyToken, CheckMessageNotEmpty], group.SendTextMessage)
+app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlreadyInGroup, group.CheckNotAlreadyInvited], group.InviteFriendToGroup)
 app.post("/chat/group/leave/", [auth_verify_jwt.verifyToken], group.LeaveGroup)
 
 //Routes for user auth functions

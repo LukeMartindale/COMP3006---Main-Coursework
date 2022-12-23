@@ -41,6 +41,18 @@ io.on("connection", function(socket) {
         
     });
 
+    socket.on("Friend Request Sent", function(alert){
+
+        socket.broadcast.emit("Friend:" + alert.friendId, alert)
+
+    })
+
+    socket.on("Group Invite Sent", function(alert){
+
+        socket.broadcast.emit("Group:" + alert.recipientId, alert)
+
+    });
+
 });
 
 //Set server to listen on port 9000

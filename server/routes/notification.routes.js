@@ -22,6 +22,8 @@ async function requestResponse(request, response){
         sender_user.save()
         recipient_user.save()
 
+        response.status(200).send({"message": "User invited to group"})
+
     } else {
 
         let notification = await Request.findByIdAndUpdate(request.body.request_id).exec()
@@ -33,6 +35,8 @@ async function requestResponse(request, response){
 
         notification.save()
         group.save()
+
+        response.status(200).send({"message": "Friend request send to user"})
 
     }
     

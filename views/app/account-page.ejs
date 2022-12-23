@@ -10,6 +10,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
+    <!-- Load Javascript for page -->
+    <script src="/javascript/app/account.js"></script>
+
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/account.css">
 
@@ -26,6 +29,10 @@
             <div class="account-content">
                 <h3 class="sub-title">Account ID</h3>
                 <p class="account-text"><%= user._id %></p>
+            </div>
+
+            <div class="back-wrapper">
+                <button id="back-button">Go Back!</button>
             </div>
 
         </div>
