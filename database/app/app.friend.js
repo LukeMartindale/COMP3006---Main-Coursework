@@ -78,11 +78,22 @@ CheckIfAlreadySentFriendRequest = async (request, response, next) => {
 
 }
 
+CheckNotSendingRequestToSelf = async (request, response, next) => {
+
+    if(jwt.decode(request.session.token).id == request.body.recipientId){
+        response.status(400).send({"message":"You cannot send a friend request to yourself!"})
+    } else {
+        next()
+    }
+
+}
+
 let friend = {
     InviteFriend,
     CheckFriendExists,
     CheckIfAlreadyFriends,
     CheckIfAlreadySentFriendRequest,
+    CheckNotSendingRequestToSelf,
 }
 
 module.exports = friend

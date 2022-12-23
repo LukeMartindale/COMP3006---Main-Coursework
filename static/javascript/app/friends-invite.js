@@ -17,14 +17,7 @@ function inviteFriend(){
             socket.emit("Friend Request Sent", {"friendId": friend_id})
         },
         error: function(result){
-            console.log(result)
-            if(result.responseJSON.message == "Already sent friend request to this user!"){
-                $(".error-box").empty().append(result.responseJSON.message)
-            }
-            if(result.responseJSON.message == "Invalid User ID!"){
-                $(".error-box").empty().append(result.responseJSON.message)
-            }
-
+            $(".error-box").empty().append(result.responseJSON.message)
         }
     })
 
@@ -43,5 +36,11 @@ $(function(){
             inviteFriend();
         }
     })
+
+    $("#back-button").click(function(){
+
+        window.location.href = "http://localhost:9000/app/friends/"
+
+    });
 
 });

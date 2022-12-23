@@ -64,3 +64,26 @@ body {
     border-radius: 6px;
     cursor: pointer;
 }
+
+.back-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+#back-button {
+    width: 160px;
+    padding: 12px 20px;
+    border: solid 2px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    height: 43px;
+    transform: skew(10deg);
+}

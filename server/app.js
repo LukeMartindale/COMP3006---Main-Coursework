@@ -49,7 +49,14 @@ app.post("/app/groups/creategroup/", [auth_verify_jwt.verifyToken, group.CheckGr
 
 app.get("/app/friends/", [auth_verify_jwt.verifyToken], routes.friendsPage)
 app.get("/app/friends/invitefriend", [auth_verify_jwt.verifyToken], friends_routes.addfriendPage)
-app.post("/app/friends/invitefriend", [auth_verify_jwt.verifyToken, friend.CheckFriendExists, friend.CheckIfAlreadyFriends, friend.CheckIfAlreadySentFriendRequest], friend.InviteFriend)
+app.post("/app/friends/invitefriend",
+    [
+        auth_verify_jwt.verifyToken, 
+        friend.CheckFriendExists, 
+        friend.CheckIfAlreadyFriends, 
+        friend.CheckIfAlreadySentFriendRequest, 
+        friend.CheckNotSendingRequestToSelf
+    ], friend.InviteFriend)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
 app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup], notification_routes.requestResponse)
