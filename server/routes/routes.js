@@ -22,7 +22,7 @@ async function friendsPage(request, response) {
 
     let friends = await User.find({"friends": {"$in": [user._id]}}).select(['-password', '-friends', '-__v']);
 
-    response.render("app/friends-page", {"friends": friends})
+    response.render("app/friends-page", {"id": jwt.decode(request.session.token).id, "friends": friends})
 
 }
 
@@ -32,7 +32,7 @@ async function notificationsPage(request, response) {
 
     notifications = await Requests.find({"recipientId": user_id, "status": "pending"}).exec()
 
-    response.render("app/notifications-page", {"notifications": notifications})
+    response.render("app/notifications-page", {"id": jwt.decode(request.session.token).id, "notifications": notifications})
 
 }
 

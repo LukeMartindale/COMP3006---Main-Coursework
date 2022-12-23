@@ -13,11 +13,16 @@ function inviteFriend(){
         },
         datatype: 'json',
         success: function(result){
+            $(".error-box").empty().append("Friend Request Sent to User!")
             socket.emit("Friend Request Sent", {"friendId": friend_id})
         },
         error: function(result){
+            console.log(result)
             if(result.responseJSON.message == "Already sent friend request to this user!"){
-                $(".error-box").empty().append("Already sent friend request to this user!")
+                $(".error-box").empty().append(result.responseJSON.message)
+            }
+            if(result.responseJSON.message == "Invalid User ID!"){
+                $(".error-box").empty().append(result.responseJSON.message)
             }
 
         }

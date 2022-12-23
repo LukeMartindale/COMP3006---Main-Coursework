@@ -43,7 +43,7 @@ CheckFriendExists = async (request, response, next) => {
         }
         next();
     } else {
-        response.status(500).send({"Message": "Invalid User ID!"})
+        response.status(500).send({"message": "Invalid User ID!"})
     }
 
 };
@@ -56,7 +56,7 @@ CheckIfAlreadyFriends = async (request, response, next) => {
     let user = await User.findById(user_id).exec()
 
     if(user.friends.includes(mongoose.Types.ObjectId(recipientId))){
-        response.status(400).send({"Message":"Already Friends"})
+        response.status(400).send({"message":"Already Friends"})
     } else {
         next()
     }
@@ -68,7 +68,7 @@ CheckIfAlreadySentFriendRequest = async (request, response, next) => {
     let user_id = jwt.decode(request.session.token).id
     let recipientId = request.body.recipientId
 
-    let user_request = await Request.findOne({"senderId": user_id, "recipientId": recipientId})
+    let user_request = await Request.findOne({"senderId": user_id, "recipientId": recipientId, "status": "pending"})
 
     if(user_request) {
         response.status(400).send({"message":"Already sent friend request to this user!"})
