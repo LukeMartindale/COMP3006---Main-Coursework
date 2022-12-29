@@ -31,6 +31,7 @@
         const USER_ID = '<%= user_id %>'
         const dm_id = '<%= directmessage._id %>';
         const username = '<%= user.username %>';
+        const FRIEND_ID = '<%= friend_user._id %>';
     </script>
 
     <div class="header-wrapper">
@@ -41,9 +42,9 @@
             <div class="header-bar-direct-title">
                 <h1 style="align-self: center;"><%= friend_user.username %></h1>
             </div>
-            <a href="#" class="header-bar-direct-options">
+            <div href="#" class="header-bar-direct-options" id="unfriend-button">
                 Unfriend User
-            </a>
+            </div>
         </div>
 
     </div>

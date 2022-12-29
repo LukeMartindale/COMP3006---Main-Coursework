@@ -64,6 +64,27 @@ function sendImage() {
     }
 }
 
+function unfriendUser(){
+
+    let unfriend_url = "http://localhost:9000/app/friends/unfriend/"
+
+    $.ajax({
+        url: unfriend_url,
+        type: 'POST',
+        data: {
+            "friendId": FRIEND_ID
+        },
+        datatype: 'json',
+        success: function(result){
+            window.location.replace("http://localhost:9000/app/friends/")
+        },
+        error: function(result){
+            console.log(result)
+        }
+    });
+
+}
+
 $(function(){
 
     $('html, body').scrollTop($(document).height());
@@ -116,6 +137,10 @@ $(function(){
 
         window.location.href = "http://localhost:9000/app/friends"
 
+    });
+
+    $("#unfriend-button").click(function(){
+        unfriendUser()
     });
 
 });

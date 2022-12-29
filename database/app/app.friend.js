@@ -1,3 +1,4 @@
+const { request } = require("express");
 let jwt = require("jsonwebtoken")
 let mongoose = require("mongoose");
 
@@ -88,12 +89,37 @@ CheckNotSendingRequestToSelf = async (request, response, next) => {
 
 }
 
+UnfriendUser = async (request, response) => {
+
+    console.log(jwt.decode(request.session.token).id)
+
+    let user = await User.findById(jwt.decode(request.session.token).id)
+    let friend = await User.findById(request.body.friendId)
+
+    console.log(user)
+    console.log(friend)
+    console.log("---")
+
+    user.friends = user.friends.filter(e => e.friend != request.body.friendId)
+    friend.friends = friend.friends.filter(e => e.friend != jwt.decode(request.session.token).id)
+
+    console.log(user)
+    console.log(friend)
+
+    user.save()
+    friend.save()
+
+    response.status(200).send({"message": "Unfriended User!"})
+
+}
+
 let friend = {
     InviteFriend,
     CheckFriendExists,
     CheckIfAlreadyFriends,
     CheckIfAlreadySentFriendRequest,
     CheckNotSendingRequestToSelf,
+    UnfriendUser,
 }
 
 module.exports = friend
