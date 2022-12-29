@@ -1,4 +1,3 @@
-const { request } = require("express");
 let jwt = require("jsonwebtoken")
 let mongoose = require("mongoose");
 

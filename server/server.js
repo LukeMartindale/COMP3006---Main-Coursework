@@ -6,6 +6,10 @@ let socketIo = require("socket.io");
 
 let app = require("./app").app;
 
+let User = require("../database/models/model.user").User;
+let Group = require("../database/models/model.group").Group;
+let DirectMessage = require("../database/models/model.direct-message").DirectMessage;
+
 //set port used for server
 let port = 9000;
 
@@ -35,27 +39,51 @@ io.on("connection", function(socket) {
         socket.broadcast.emit("RECIEVED", msg)
     })
 
-    socket.on("Send Group Message", function(message) {
+    socket.on("Send Group Message", async function(message) {
 
         socket.broadcast.emit("Group-Message:" + message.group_id, message)
+
+        let group = await Group.findById(message.group_id).exec()
+
+        for(let i=0; i< group.group_members.length; i++){
+            socket.broadcast.emit("User:" + group.group_members[i], "group")
+        }
         
     });
 
-    socket.on("Send Group Image", function(message){
+    socket.on("Send Group Image", async function(message){
 
         socket.broadcast.emit("Group-Image:" + message.group_id, message)
 
+        let group = await Group.findById(message.group_id).exec()
+
+        for(let i=0; i< group.group_members.length; i++){
+            socket.broadcast.emit("User:" + group.group_members[i], "group")
+        }
+
     });
 
-    socket.on("Send Direct Message", function(message) {
+    socket.on("Send Direct Message", async function(message) {
 
         socket.broadcast.emit("Direct-Message:" + message.dm_id, message)
+
+        let dm = await DirectMessage.findById(message.dm_id).exec()
+
+        for(let i=0; i< dm.group_members.length; i++){
+            socket.broadcast.emit("User:" + dm.group_members[i], "direct")
+        }
         
     });
 
-    socket.on("Send Direct Image", function(message){
+    socket.on("Send Direct Image", async function(message){
 
         socket.broadcast.emit("Direct-Image:" + message.dm_id, message)
+
+        let dm = await DirectMessage.findById(message.dm_id).exec()
+
+        for(let i=0; i< dm.group_members.length; i++){
+            socket.broadcast.emit("User:" + dm.group_members[i], "direct")
+        }
 
     });
 
