@@ -8,7 +8,7 @@ async function addfriendPage(request, response) {
 
     let user = await User.findById(user_id)
 
-    response.render("app/friends-invite-page")
+    response.render("app/friends-invite-page", {"user_id": user._id})
 
 }
 

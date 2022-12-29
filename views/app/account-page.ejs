@@ -12,14 +12,22 @@
 
     <!-- Load Javascript for page -->
     <script src="/javascript/app/account.js"></script>
+    <script src="/javascript/app/alerts.js"></script>
 
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/account.css">
+    <link rel="stylesheet" href="/css/alert.css">
 
     <title>Account</title>
 
 </head>
 <body>
+
+    <script>
+        const USER_ID = '<%= user_id %>'
+    </script>
+
+    <div class="alert-wrapper"></div>
 
     <div class="content-wrapper">
         <div class="account-box">

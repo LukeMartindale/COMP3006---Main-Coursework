@@ -22,9 +22,9 @@ async function groupchatsettingsPage(request, response) {
     let group = await Group.findOne({ "_id": request.params.id });
 
     let user = await User.findById(jwt.decode(request.session.token).id).select(['-password']).exec();
-    let friends = await User.find({"friends": {"$in": [user._id]}}).select(['-password', '-friends', '-__v']);
+    let friends = await User.find({"friends.friend": {"$in": [user._id]}}).select(['-password', '-friends', '-__v']);
 
-    response.render("app/groups-settings-page.ejs", {"group": group, "friends": friends})
+    response.render("app/groups-settings-page.ejs", {"group": group, "friends": friends, "user_id": user._id})
 
 }
 

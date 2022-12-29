@@ -12,14 +12,22 @@
 
     <!-- Load Javascript for page -->
     <script src="/javascript/app/groups-create.js"></script>
+    <script src="/javascript/app/alerts.js"></script>
 
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/create.css">
+    <link rel="stylesheet" href="/css/alert.css">
 
     <title>Create Group</title>
 
 </head>
 <body>
+
+    <script>
+        const USER_ID = '<%= user_id %>'
+    </script>
+
+    <div class="alert-wrapper"></div>
 
     <div class="content-wrapper">
         <div class="create-box">

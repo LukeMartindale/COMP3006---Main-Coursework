@@ -41,6 +41,12 @@ io.on("connection", function(socket) {
         
     });
 
+    socket.on("Send Direct Message", function(message) {
+
+        socket.broadcast.emit("Direct-Message:" + message.dm_id, message)
+        
+    });
+
     socket.on("Friend Request Sent", function(alert){
 
         socket.broadcast.emit("Friend:" + alert.friendId, alert)

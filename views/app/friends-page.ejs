@@ -52,13 +52,17 @@
             <div class="content">
 
                 <% for(i=0; i<friends.length; i++) { %>
-                    <div class="chat-group">
+                    <% for(x=0; x<friends[i].friends.length; x++) { %>
+                        <% if(friends[i].friends[x].friend == id) { %>
+                            <a href="http://localhost:9000/chat/direct/<%= friends[i].friends[x].dm_id %>" class="chat-group">
+                        <% } %>
+                    <% } %>
                         <div class="chat-content">
                             <h2 class="group-title">
                                 <%= friends[i].username %>
                             </h2>
                         </div>
-                    </div>
+                    </a>
                 <% } %>
     
                 <a href="http://localhost:9000/app/friends/invitefriend" class="create-wrapper">

@@ -12,9 +12,11 @@
 
     <!-- Load Javascript for page -->
     <script src="/javascript/app/groups-settings.js"></script>
+    <script src="/javascript/app/alerts.js"></script>
 
     <!-- Load CSS for page -->
     <link rel="stylesheet" href="/css/settings.css">
+    <link rel="stylesheet" href="/css/alert.css">
 
     <title>Group Settings</title>
 
@@ -22,8 +24,11 @@
 <body>
 
     <script>
+        const USER_ID = '<%= user_id %>'
         const group_id = '<%= group._id %>'
     </script>
+
+    <div class="alert-wrapper"></div>
 
     <div class="content-wrapper">
         <div class="settings-box">

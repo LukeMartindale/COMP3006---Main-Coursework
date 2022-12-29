@@ -1,9 +1,7 @@
 function sendMessage() {
 
-    let send_url = "http://localhost:9000/chat/group/"
+    let send_url = "http://localhost:9000/chat/direct/"
     let user_text = $("#chat-input").val()
-
-    console.log(user_text.length > 0)
 
     if(user_text.length > 0){
         $.ajax({
@@ -11,7 +9,7 @@ function sendMessage() {
             type: 'POST',
             data: {
                 "text": user_text,
-                "groupId": group_id,
+                "dm_id": dm_id,
                 "senderUsername": username,
             },
             datatype: 'json',
@@ -23,17 +21,13 @@ function sendMessage() {
             }
         });
 
-        socket.emit("Send Group Message", {"text": user_text, "senderUsername": username, "group_id": group_id})
+        socket.emit("Send Direct Message", {"text": user_text, "senderUsername": username, "dm_id": dm_id})
 
         $(".message-wrapper").append(
             "<div class=\"user-message\"><div class=\"user-message-content\"><p class=\"message-text\">" + user_text + "</p></div></div>")
-    
+
         $('html, body').scrollTop($(document).height());
-
     }
-
-
-
 }
 
 $(function(){
@@ -54,19 +48,19 @@ $(function(){
         $("#chat-input").val("")
     });
 
-    socket.on("Group-Message:" + group_id, function(message){
+    socket.on("Direct-Message:" + dm_id, function(message){
 
         $(".message-wrapper").append(
             "<div class=\"group-message\"><div class=\"group-message-content\"><h4>" + message.senderUsername + "</h4><p class=\"message-text\">" + message.text + "</p></div></div>")
 
         $('html, body').scrollTop($(document).height());
-
-    });
+        
+        })
 
     $(".back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/app/groups"
+        window.location.href = "http://localhost:9000/app/friends"
 
     });
 
-})
+});

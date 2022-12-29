@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 
     <!-- Load Javascript for page -->
-    <script src="/javascript/app/groups-chat.js"></script>
+    <script src="/javascript/app/direct-chat.js"></script>
     <script src="/javascript/app/alerts.js"></script>
 
     <!-- Load CSS for page -->
@@ -29,7 +29,7 @@
 
     <script>
         const USER_ID = '<%= user_id %>'
-        const group_id = '<%= group._id %>';
+        const dm_id = '<%= directmessage._id %>';
         const username = '<%= user.username %>';
     </script>
 
@@ -38,11 +38,11 @@
             <div class="back-button">
                 <div class="bi bi-arrow-left-circle-fill"></div>
             </div>
-            <div class="header-bar-title">
-                <h1 style="align-self: center;"><%= group.group_name %></h1>
+            <div class="header-bar-direct-title">
+                <h1 style="align-self: center;"><%= friend_user.username %></h1>
             </div>
-            <a href="http://localhost:9000/chat/group/<%= group._id %>/settings" class="header-bar-options">
-                <div  class="bi bi-gear-fill"></div>
+            <a href="#" class="header-bar-direct-options">
+                Unfriend User
             </a>
         </div>
 

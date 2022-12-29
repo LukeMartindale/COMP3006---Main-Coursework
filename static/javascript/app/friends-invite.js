@@ -1,5 +1,3 @@
-let socket = io("http://localhost:9000");
-
 function inviteFriend(){
 
     let invite_url = "http://localhost:9000/app/friends/invitefriend"

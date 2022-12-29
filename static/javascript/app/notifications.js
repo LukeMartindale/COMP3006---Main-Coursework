@@ -13,14 +13,12 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                location.reload()
+                console.log(result)
             },
             error: function(result){
                 console.log(result)
             }
         })
-
-        location.reload()
 
     });
 
@@ -44,8 +42,6 @@ $(function(){
             }
         })
 
-        location.reload()
-
     });
 
     $(".notification-group-accept").click(function(){
@@ -68,8 +64,6 @@ $(function(){
             }
         })
 
-        location.reload()
-
     });
 
     $(".notification-group-decline").click(function(){
@@ -91,8 +85,6 @@ $(function(){
                 console.log(result)
             }
         })
-
-        location.reload()
 
     });
 

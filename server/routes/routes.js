@@ -19,10 +19,9 @@ async function groupsPage(request, response) {
 async function friendsPage(request, response) {
 
     let user = await User.findById(jwt.decode(request.session.token).id).select(['-password']).exec();
+    let friends = await User.find({"friends.friend": {"$in": [user._id]}}).select(['-password', '-__v']);
 
-    let friends = await User.find({"friends": {"$in": [user._id]}}).select(['-password', '-friends', '-__v']);
-
-    response.render("app/friends-page", {"id": jwt.decode(request.session.token).id, "friends": friends})
+    response.render("app/friends-page", {"id": jwt.decode(request.session.token).id, "friends": friends, "user": user})
 
 }
 
@@ -40,14 +39,16 @@ async function accountPage(request, response) {
 
     let user = await User.findById(jwt.decode(request.session.token).id).select(["-password"])
 
-    response.render("app/account-page", {"user": user})
+    response.render("app/account-page", {"user": user, "user_id": user._id})
 
 }
 
 // Create, Add & Update Routes
 async function creategroupPage(request, response) {
 
-    response.render("app/groups-create-page")
+    let user_id = jwt.decode(request.session.token).id
+
+    response.render("app/groups-create-page", {"user_id": user_id})
 
 }
 
