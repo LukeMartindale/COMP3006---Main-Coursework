@@ -96,15 +96,8 @@ UnfriendUser = async (request, response) => {
     let user = await User.findById(jwt.decode(request.session.token).id)
     let friend = await User.findById(request.body.friendId)
 
-    console.log(user)
-    console.log(friend)
-    console.log("---")
-
     user.friends = user.friends.filter(e => e.friend != request.body.friendId)
     friend.friends = friend.friends.filter(e => e.friend != jwt.decode(request.session.token).id)
-
-    console.log(user)
-    console.log(friend)
 
     user.save()
     friend.save()

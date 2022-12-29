@@ -62,7 +62,7 @@ app.post("/app/friends/invitefriend/",
 app.post("/app/friends/unfriend/", [auth_verify_jwt.verifyToken], friend.UnfriendUser)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
-app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup], notification_routes.requestResponse)
+app.post("/app/notifications/", [auth_verify_jwt.verifyToken, notification.CheckIfAlreadyInGroup, notification.CheckIfAlreadyFriends], notification_routes.requestResponse)
 
 app.get("/app/account", [auth_verify_jwt.verifyToken], routes.accountPage)
 
