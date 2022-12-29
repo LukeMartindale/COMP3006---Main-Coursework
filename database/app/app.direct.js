@@ -4,23 +4,42 @@ let jwt = require("jsonwebtoken");
 
 SendTextMessage = (request, response) => {
     
-    let message = new Message({
-        text: request.body.text,
-        sentOn: new Date(),
-        groupId: request.body.dm_id,
-        senderId: jwt.decode(request.session.token).id,
-        senderUsername: request.body.senderUsername,
-        type: 'direct-message',
-    })
+    if(request.body.type == "text") {
+        let message = new Message({
+            text: request.body.text,
+            sentOn: new Date(),
+            groupId: request.body.dm_id,
+            senderId: jwt.decode(request.session.token).id,
+            senderUsername: request.body.senderUsername,
+            type: 'direct-message',
+        })
 
-    message.save((error, message) => {
-        if(error){
-            response.status(500).send({"message": error})
-            return;
-        }
-        response.status(200).send({"message": "Message was sent!"})
-    });
+        message.save((error, message) => {
+            if(error){
+                response.status(500).send({"message": error})
+                return;
+            }
+            response.status(200).send({"message": "Message was sent!"})
+        });
+    }
+    if(request.body.type == "image") {
+        let message = new Message({
+            text: request.body.text,
+            sentOn: new Date(),
+            groupId: request.body.dm_id,
+            senderId: jwt.decode(request.session.token).id,
+            senderUsername: request.body.senderUsername,
+            type: 'direct-image',
+        })
 
+        message.save((error, message) => {
+            if(error){
+                response.status(500).send({"message": error})
+                return;
+            }
+            response.status(200).send({"message": "Message was sent!"})
+        });
+    }
 }
 
 CheckMessageNotEmpty = async(request, response, next) => {

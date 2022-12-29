@@ -54,30 +54,44 @@
 
         <div class="message-wrapper">
             <% for (i=0; i<messages.length; i++) { %>
-                <% if(messages[i].senderId == user_id) { %>
-                    <div class="user-message">
-                        <div class="user-message-content">
-                            <p class="message-text"><%= messages[i].text %></p>
+                <% if(messages[i].type == "direct-message") { %>
+                    <% if(messages[i].senderId == user_id) { %>
+                        <div class="user-message">
+                            <div class="user-message-content">
+                                <p class="message-text"><%= messages[i].text %></p>
+                            </div>
                         </div>
-                    </div>
-                <% } else { %>
-                    <div class="group-message">
-                        <div class="group-message-content">
-                            <h4><%= messages[i].senderUsername %></h4>
-                            <p class="message-text"><%= messages[i].text %></p>
+                    <% } else { %>
+                        <div class="group-message">
+                            <div class="group-message-content">
+                                <h4><%= messages[i].senderUsername %></h4>
+                                <p class="message-text"><%= messages[i].text %></p>
+                            </div>
                         </div>
-                    </div>
+                    <% } %>
+                <% } %>
+                <% if(messages[i].type == "direct-image") { %>
+                    <% if(messages[i].senderId == user_id) { %>
+                        <div class="user-message">
+                            <div class="user-message-content">
+                                <img class="user-image" src=<%= messages[i].text %>>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="group-message">
+                            <div class="group-message-content">
+                                <h4><%= messages[i].senderUsername %></h4>
+                                <img class="user-image" src=<%= messages[i].text %>>
+                            </div>
+                        </div>
+                    <% } %>
                 <% } %>
             <% } %>
         </div>
 
         <div class="input-wrapper">
             <div class="input-bar">
-                <textarea id="chat-input"></textarea>
-                <!-- Emoji -->
-                <button id="emoji-button">
-                    <div class="bi bi-emoji-smile-fill" style="font-size: 22px;"></div>
-                </button>
+                <textarea id="chat-input" maxlength="750"></textarea>
                 <!-- Image -->
                 <button id="image-button">
                     <div class="bi bi-image-fill" style="font-size: 22px;"></div>
@@ -86,7 +100,10 @@
                 <button id="send-button">
                     <div class="bi bi-send-fill" style="font-size: 22px;"></div>
                 </button>
-                
+            </div>
+            <div class="dropdown dropdown-shown">
+                <input class="dropdown-input" type="text" placeholder="Insert image link here">
+                <button id="image-send-button">Send</button>
             </div>
         </div>
 

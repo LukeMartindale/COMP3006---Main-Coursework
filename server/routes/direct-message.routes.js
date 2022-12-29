@@ -9,7 +9,7 @@ async function directmessagePage(request, response) {
     let dm_id = request.params.id;
     let user = await User.findById(jwt.decode(request.session.token).id).select(['-password']);
 
-    let messages = await Message.find({ "groupId": dm_id, "type": "direct-message"});
+    let messages = await Message.find({ "groupId": dm_id, "type": ["direct-message", "direct-image"]});
     let directmessage = await DirectMessage.findOne({ "_id": dm_id });
 
     for(let i=0; i<directmessage.group_members.length; i++){

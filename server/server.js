@@ -41,10 +41,22 @@ io.on("connection", function(socket) {
         
     });
 
+    socket.on("Send Group Image", function(message){
+
+        socket.broadcast.emit("Group-Image:" + message.group_id, message)
+
+    });
+
     socket.on("Send Direct Message", function(message) {
 
         socket.broadcast.emit("Direct-Message:" + message.dm_id, message)
         
+    });
+
+    socket.on("Send Direct Image", function(message){
+
+        socket.broadcast.emit("Direct-Image:" + message.dm_id, message)
+
     });
 
     socket.on("Friend Request Sent", function(alert){

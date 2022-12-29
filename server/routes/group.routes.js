@@ -10,7 +10,7 @@ async function groupchatPage(request, response) {
 
     let user = await User.findById(jwt.decode(request.session.token).id).select(['-password']);
 
-    let messages = await Message.find({ "groupId": group_id, "type": "group-message"});
+    let messages = await Message.find({ "groupId": group_id, "type": ["group-message", "group-image"]});
     let group = await Group.findOne({ "_id": group_id });
 
     response.render("app/groups-chat-page", {"messages": messages, "group": group, "user": user, "user_id": user._id});
