@@ -46,7 +46,7 @@ io.on("connection", function(socket) {
         let group = await Group.findById(message.group_id).exec()
 
         for(let i=0; i< group.group_members.length; i++){
-            socket.broadcast.emit("User:" + group.group_members[i], "group")
+            socket.broadcast.emit("User:" + group.group_members[i], {"type": "group", "group_id": message.group_id})
         }
         
     });
@@ -58,7 +58,7 @@ io.on("connection", function(socket) {
         let group = await Group.findById(message.group_id).exec()
 
         for(let i=0; i< group.group_members.length; i++){
-            socket.broadcast.emit("User:" + group.group_members[i], "group")
+            socket.broadcast.emit("User:" + group.group_members[i], {"type": "group", "group_id": message.group_id})
         }
 
     });

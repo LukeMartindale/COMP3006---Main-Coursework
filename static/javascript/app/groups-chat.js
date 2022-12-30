@@ -1,9 +1,8 @@
 function sendMessage() {
 
     let send_url = "http://localhost:9000/chat/group/"
+    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
     let user_text = $("#chat-input").val()
-
-    console.log(user_text.length > 0)
 
     if(user_text.length > 0){
         $.ajax({
@@ -16,13 +15,22 @@ function sendMessage() {
                 "type": "text",
             },
             datatype: 'json',
-            success: function(result){
-                console.log("Message Sent!")
-            },
             error: function(result){
                 console.log(result)
             }
         });
+
+        $.ajax({
+            url: notification_url,
+            type: 'POST',
+            data: {
+                "groupId": group_id,
+            },
+            datatype: 'json',
+            error: function(result){
+                console.log(result)
+            }
+        })
 
         socket.emit("Send Group Message", {"text": user_text, "senderUsername": username, "group_id": group_id})
 
@@ -38,6 +46,7 @@ function sendMessage() {
 function sendImage() {
 
     let send_url = "http://localhost:9000/chat/group/"
+    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
     let user_text = $(".dropdown-input").val()
 
     if(user_text.length > 0){
@@ -59,6 +68,18 @@ function sendImage() {
             }
         });
 
+        $.ajax({
+            url: notification_url,
+            type: 'POST',
+            data: {
+                "groupId": group_id,
+            },
+            datatype: 'json',
+            error: function(result){
+                console.log(result)
+            }
+        })
+
         socket.emit("Send Group Image", {"text": user_text, "senderUsername": username, "group_id": group_id})
         
         $(".message-wrapper").append(
@@ -69,6 +90,21 @@ function sendImage() {
 }
 
 $(function(){
+
+    //When chat is loaded send to endpoint to mark all unread 
+    // message notifications for this group as resolved
+    $.ajax({
+        url: "http://localhost:9000/app/notiifications/groupmessage/resolve",
+        type: 'POST',
+        data: {
+            "groupId": group_id,
+        },
+        datatype: 'json',
+        error: function(result){
+            console.log(result)
+        }
+
+    })
 
     $('html, body').scrollTop($(document).height());
 

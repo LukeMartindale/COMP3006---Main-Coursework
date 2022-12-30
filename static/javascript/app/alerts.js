@@ -39,15 +39,51 @@ $(function(){
     });
 
     socket.on("User:" + USER_ID, function(alert){
-        if(window.location.href == "http://localhost:9000/app/groups" || window.location.href == "http://localhost:9000/app/friends" || window.location.href == "http://localhost:9000/app/notifications"){
-            if(alert == "group"){
+        if(window.location.href == "http://localhost:9000/app/groups"){
+            if(alert.type == "group"){
+                if($("#" + alert.group_id + "-alert-counter").hasClass("no-alerts")){
+                    $("#" + alert.group_id + "-alert-counter").removeClass("no-alerts")
+                }
+                let val = parseInt($("#" + alert.group_id + "-alert-counter").text())
+                val++
+                $("#" + alert.group_id + "-alert-counter").text(val)
+            } else if(alert.type == "direct"){
+                console.log("TEST")
+                console.log("direct")
+                if($("#friend-alert-counter").hasClass("no-alerts")){
+                    $("#friend-alert-counter").removeClass("no-alerts")
+                }
+                let val = parseInt($("#friend-alert-counter").text())
+                val++
+                $("#friend-alert-counter").text(val)
+            };
+
+        } else if(window.location.href == "http://localhost:9000/app/friends") {
+            if(alert.type == "group"){
                 if($("#group-alert-counter").hasClass("no-alerts")){
                     $("#group-alert-counter").removeClass("no-alerts")
                 }
                 let val = parseInt($("#group-alert-counter").text())
                 val++
                 $("#group-alert-counter").text(val)
-            } else if(alert == "direct"){
+            } else if(alert.type == "direct"){
+                console.log("direct")
+                if($("#friend-alert-counter").hasClass("no-alerts")){
+                    $("#friend-alert-counter").removeClass("no-alerts")
+                }
+                let val = parseInt($("#friend-alert-counter").text())
+                val++
+                $("#friend-alert-counter").text(val)
+            };
+        } else if(window.location.href == "http://localhost:9000/app/notifications") {
+            if(alert.type == "group"){
+                if($("#group-alert-counter").hasClass("no-alerts")){
+                    $("#group-alert-counter").removeClass("no-alerts")
+                }
+                let val = parseInt($("#group-alert-counter").text())
+                val++
+                $("#group-alert-counter").text(val)
+            } else if(alert.type == "direct"){
                 console.log("direct")
                 if($("#friend-alert-counter").hasClass("no-alerts")){
                     $("#friend-alert-counter").removeClass("no-alerts")

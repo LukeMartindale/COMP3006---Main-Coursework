@@ -11,6 +11,7 @@
         <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
         <!-- Load Javascript for page -->
+        <script src="/javascript/app/groups-page.js"></script>
         <script src="/javascript/auth/logout.js"></script>
         <script src="/javascript/app/alerts.js"></script>
 
@@ -24,7 +25,7 @@
     <body>
 
         <script>
-            const USER_ID = '<%= id %>'
+            const USER_ID = '<%= id %>';
         </script>
 
         <div class="content-wrapper">
@@ -60,6 +61,9 @@
                             <h2 class="group-title">
                                 <%= groups[i].group_name %>
                             </h2>
+                            <div id="<%= groups[i]._id %>-alert-counter" class="alert-counter no-alerts">
+                                0
+                            </div>
                         </div>
                     </a>
                 <% } %>
