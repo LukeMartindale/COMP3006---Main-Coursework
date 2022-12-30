@@ -69,23 +69,45 @@ async function requestResponse(request, response){
 
 async function groupmessageNotification(request, response) {
 
-    let group = await Group.findById(request.body.groupId).exec()
+    if(request.body.type == "group"){
+        let group = await Group.findById(request.body.groupId).exec()
 
-    for(let i=0; i<group.group_members.length; i++){
-        if(group.group_members[i] != jwt.decode(request.session.token).id){
-            let notification = new Request({
-                senderId: request.body.groupId,
-                recipientId: group.group_members[i],
-                type: 'group-message',
-                sentOn: new Date(),
-                status: 'pending',
-                responseRequired: false,
-            });
-            notification.save()
+        for(let i=0; i<group.group_members.length; i++){
+            if(group.group_members[i] != jwt.decode(request.session.token).id){
+                let notification = new Request({
+                    senderId: request.body.groupId,
+                    recipientId: group.group_members[i],
+                    type: 'group-message',
+                    sentOn: new Date(),
+                    status: 'pending',
+                    responseRequired: false,
+                });
+                notification.save()
+            }
         }
+        response.status(200).send({"message": "Group message notification(s) sent"})
+    } else if (request.body.type == "direct"){
+        let dm = await DirectMessage.findById(request.body.groupId).exec()
+
+        for(let i=0; i<dm.group_members.length; i++){
+            if(dm.group_members[i] != jwt.decode(request.session.token).id){
+                let notification = new Request({
+                    senderId: jwt.decode(request.session.token).id,
+                    recipientId: dm.group_members[i],
+                    type: 'direct-message',
+                    sentOn: new Date(),
+                    status: 'pending',
+                    responseRequired: false,
+                });
+                notification.save()
+            }
+        }
+
     }
 
-    response.status(200).send({"message": "Group message notification(s) sent"})
+
+
+
 
 }
 
@@ -111,7 +133,30 @@ async function getUnreadGroupMessages(request, response) {
 
 }
 
+async function readdirectmessageNotification(request, response) {
+
+    let user_requests = await Request.find({"recipientId": jwt.decode(request.session.token).id, "status": "pending", "type": "direct-message"}).exec()
+
+    for(let i=0; i< user_requests.length; i++){
+
+        user_requests[i].status = "resolved"
+        user_requests[i].save()
+
+    }
+    response.status(200).send({"message": "Marked unread messages as read!"})
+
+}
+
+async function getUnreadDirectMessages(request, response) {
+
+    let direct_requests = await Request.find({"recipientId": jwt.decode(request.session.token).id, "status": "pending", "type": "direct-message"}).exec()
+    
+    response.status(200).send({"direct_requests": direct_requests})
+}
+
 module.exports.requestResponse = requestResponse;
 module.exports.groupmessageNotification = groupmessageNotification;
 module.exports.readgroupmessageNotification = readgroupmessageNotification;
 module.exports.getUnreadGroupMessages = getUnreadGroupMessages;
+module.exports.readdirectmessageNotification = readdirectmessageNotification;
+module.exports.getUnreadDirectMessages = getUnreadDirectMessages;

@@ -70,7 +70,7 @@ io.on("connection", function(socket) {
         let dm = await DirectMessage.findById(message.dm_id).exec()
 
         for(let i=0; i< dm.group_members.length; i++){
-            socket.broadcast.emit("User:" + dm.group_members[i], "direct")
+            socket.broadcast.emit("User:" + dm.group_members[i], {"type": "direct", "dm_id": message.dm_id, "sender_id": message.senderId})
         }
         
     });
@@ -82,7 +82,7 @@ io.on("connection", function(socket) {
         let dm = await DirectMessage.findById(message.dm_id).exec()
 
         for(let i=0; i< dm.group_members.length; i++){
-            socket.broadcast.emit("User:" + dm.group_members[i], "direct")
+            socket.broadcast.emit("User:" + dm.group_members[i], {"type": "direct", "dm_id": message.dm_id, "sender_id": message.senderId})
         }
 
     });

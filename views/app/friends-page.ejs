@@ -11,6 +11,7 @@
         <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 
         <!-- Load Javascript for page -->
+        <script src="/javascript/app/friends-page.js"></script>
         <script src="/javascript/auth/logout.js"></script>
         <script src="/javascript/app/alerts.js"></script>
 
@@ -64,6 +65,9 @@
                             <h2 class="group-title">
                                 <%= friends[i].username %>
                             </h2>
+                            <div id="<%= friends[i]._id %>-alert-counter" class="alert-counter no-alerts">
+                                0
+                            </div>
                         </div>
                     </a>
                 <% } %>

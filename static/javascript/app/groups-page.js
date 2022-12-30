@@ -1,7 +1,7 @@
 $(function(){
 
     $.ajax({
-        url: "http://localhost:9000/app/notifications/unread/",
+        url: "http://localhost:9000/app/notifications/group/unread/",
         type: 'GET',
         datatype: 'json',
         success: function(data){

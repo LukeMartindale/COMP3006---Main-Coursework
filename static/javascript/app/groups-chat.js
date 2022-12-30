@@ -25,6 +25,7 @@ function sendMessage() {
             type: 'POST',
             data: {
                 "groupId": group_id,
+                "type": "group",
             },
             datatype: 'json',
             error: function(result){
@@ -73,6 +74,7 @@ function sendImage() {
             type: 'POST',
             data: {
                 "groupId": group_id,
+                "type": "group",
             },
             datatype: 'json',
             error: function(result){
@@ -94,7 +96,7 @@ $(function(){
     //When chat is loaded send to endpoint to mark all unread 
     // message notifications for this group as resolved
     $.ajax({
-        url: "http://localhost:9000/app/notiifications/groupmessage/resolve",
+        url: "http://localhost:9000/app/notifications/groupmessage/resolve",
         type: 'POST',
         data: {
             "groupId": group_id,

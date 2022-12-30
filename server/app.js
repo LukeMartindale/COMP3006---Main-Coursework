@@ -62,15 +62,17 @@ app.post("/app/friends/invitefriend/",
 app.post("/app/friends/unfriend/", [auth_verify_jwt.verifyToken], friend.UnfriendUser)
 
 app.get("/app/notifications/", [auth_verify_jwt.verifyToken], routes.notificationsPage)
-app.get("/app/notifications/unread", [auth_verify_jwt.verifyToken], notification_routes.getUnreadGroupMessages)
+app.get("/app/notifications/group/unread/", [auth_verify_jwt.verifyToken], notification_routes.getUnreadGroupMessages)
+app.get("/app/notifications/direct/unread/", [auth_verify_jwt.verifyToken], notification_routes.getUnreadDirectMessages)
 app.post("/app/notifications/", 
     [
         auth_verify_jwt.verifyToken, 
         notification.CheckIfAlreadyInGroup, 
         notification.CheckIfAlreadyFriends
     ], notification_routes.requestResponse)
-app.post("/app/notifications/groupmessage", [auth_verify_jwt.verifyToken], notification_routes.groupmessageNotification)
-app.post("/app/notiifications/groupmessage/resolve", [auth_verify_jwt.verifyToken], notification_routes.readgroupmessageNotification)
+app.post("/app/notifications/groupmessage/", [auth_verify_jwt.verifyToken], notification_routes.groupmessageNotification)
+app.post("/app/notifications/groupmessage/resolve/", [auth_verify_jwt.verifyToken], notification_routes.readgroupmessageNotification)
+app.post("/app/notifications/directmessage/resolve/", [auth_verify_jwt.verifyToken], notification_routes.readdirectmessageNotification)
 
 app.get("/app/account", [auth_verify_jwt.verifyToken], routes.accountPage)
 

@@ -1,6 +1,7 @@
 function sendMessage() {
 
     let send_url = "http://localhost:9000/chat/direct/"
+    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
     let user_text = $("#chat-input").val()
 
     if(user_text.length > 0){
@@ -22,7 +23,21 @@ function sendMessage() {
             }
         });
 
-        socket.emit("Send Direct Message", {"text": user_text, "senderUsername": username, "dm_id": dm_id})
+        $.ajax({
+            url: notification_url,
+            type: 'POST',
+            data: {
+                "groupId": dm_id,
+                "type": "direct",
+            },
+            datatype: 'json',
+            error: function(result){
+                console.log(result)
+            }
+        })
+
+
+        socket.emit("Send Direct Message", {"text": user_text, "senderId": USER_ID,"senderUsername": username, "dm_id": dm_id})
 
         $(".message-wrapper").append(
             "<div class=\"user-message\"><div class=\"user-message-content\"><p class=\"message-text\">" + user_text + "</p></div></div>")
@@ -34,6 +49,7 @@ function sendMessage() {
 function sendImage() {
 
     let send_url = "http://localhost:9000/chat/direct/"
+    let notification_url = "http://localhost:9000/app/notifications/groupmessage/"
     let user_text = $(".dropdown-input").val()
 
     if(user_text.length > 0){
@@ -55,7 +71,20 @@ function sendImage() {
             }
         });
 
-        socket.emit("Send Direct Image", {"text": user_text, "senderUsername": username, "dm_id": dm_id})
+        $.ajax({
+            url: notification_url,
+            type: 'POST',
+            data: {
+                "groupId": dm_id,
+                "type": "direct",
+            },
+            datatype: 'json',
+            error: function(result){
+                console.log(result)
+            }
+        })
+
+        socket.emit("Send Direct Image", {"text": user_text, "senderId": USER_ID, "senderUsername": username, "dm_id": dm_id})
         
         $(".message-wrapper").append(
             "<div class=\"user-message\"><div class=\"user-message-content\"><img class=\"user-image\" src=" + user_text + "></div></div>")
@@ -86,6 +115,19 @@ function unfriendUser(){
 }
 
 $(function(){
+
+    $.ajax({
+        url: "http://localhost:9000/app/notifications/directmessage/resolve/",
+        type: 'POST',
+        data: {
+            "groupId": dm_id,
+        },
+        datatype: 'json',
+        error: function(result){
+            console.log(result)
+        }
+
+    })
 
     $('html, body').scrollTop($(document).height());
 
