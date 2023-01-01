@@ -107,6 +107,13 @@ LeaveGroup = async (request, response) => {
 
 };
 
+DeleteGroup = async (request, response) => {
+
+    await Group.findByIdAndDelete(request.body.groupId)
+    response.status(200).send({"message": "Group deleted!"})
+
+}
+
 CheckIfAlreadyInGroup = async(request, response, next) => {
 
     let group = await Group.findById(request.body.groupId).exec()
@@ -151,11 +158,24 @@ CheckNotAlreadyInvited = async(request, response, next) => {
 
 }
 
+CheckIsGroupAdmin = async(request, response, next) => {
+
+    let group = await Group.findById(request.body.groupId).exec()
+
+    if(group.group_admin == jwt.decode(request.session.token).id){
+        next()
+    } else {
+        response.status(400).send({"message": "User is not the group admin!"})
+    }
+
+}
+
 let group = {
     CreateGroup,
     SendTextMessage,
     InviteFriendToGroup,
     LeaveGroup,
+    DeleteGroup,
     CheckIfAlreadyInGroup,
     CheckGroupNameNotEmpty,
     CheckNotAlreadyInvited,

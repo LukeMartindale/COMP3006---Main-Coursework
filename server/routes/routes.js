@@ -29,7 +29,7 @@ async function notificationsPage(request, response) {
 
     let user_id = jwt.decode(request.session.token).id
 
-    notifications = await Requests.find({"recipientId": user_id, "status": "pending"}).exec()
+    notifications = await Requests.find({"recipientId": user_id, "status": "pending", "type": ["friend-request", "group-invite"]}).exec()
 
     response.render("app/notifications-page", {"id": jwt.decode(request.session.token).id, "notifications": notifications})
 

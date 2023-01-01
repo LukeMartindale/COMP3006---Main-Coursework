@@ -114,3 +114,15 @@ body {
     margin-bottom: 5px;
     height: 43px;
 }
+
+#delete-button {
+    width: 160px;
+    padding: 12px 20px;
+    border: solid 2px #fefefe;
+    background-color: #0D0D0D;
+    color: #fefefe;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 5px;
+    height: 43px;
+}

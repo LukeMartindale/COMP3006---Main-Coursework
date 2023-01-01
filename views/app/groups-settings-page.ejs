@@ -57,6 +57,9 @@
 
                 <div class="button-wrapper">
                     <button id="leave-button">Leave Group</button>
+                    <% if(group.group_admin == user_id) { %>
+                        <button id="delete-button">Delete Group</button>
+                    <% } %>
                 </div>
 
             </div>

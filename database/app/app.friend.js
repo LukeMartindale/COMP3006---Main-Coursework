@@ -55,12 +55,13 @@ CheckIfAlreadyFriends = async (request, response, next) => {
 
     let user = await User.findById(user_id).exec()
 
-    if(user.friends.includes(mongoose.Types.ObjectId(recipientId))){
-        response.status(400).send({"message":"Already Friends"})
-    } else {
-        next()
+    for(let i=0; i< user.friends.length; i++){
+        if(user.friends[i].friend == recipientId){
+            response.status(400).send({"message":"Already Friends"})
+            return;
+        }
     }
-
+    next()
 }
 
 CheckIfAlreadySentFriendRequest = async (request, response, next) => {

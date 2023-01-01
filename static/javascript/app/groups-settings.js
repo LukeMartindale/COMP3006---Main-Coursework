@@ -58,6 +58,28 @@ $(function(){
 
     });
 
+    $("#delete-button").click(function(){
+
+        delete_url = "http://localhost:9000/chat/group/delete"
+
+        $.ajax({
+            url: delete_url,
+            type: 'POST',
+            data: {
+                "groupId": group_id,
+            },
+            datatype: 'json',
+            success: function(result){
+                window.location.replace("http://localhost:9000/app/groups")
+            },
+            error: function(result){
+                console.log(result)
+            }
+
+        })
+
+    })
+
     $("#back-button").click(function(){
 
         window.location.href = "http://localhost:9000/chat/group/" + group_id

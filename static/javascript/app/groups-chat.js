@@ -50,46 +50,52 @@ function sendImage() {
     let notification_url = "http://localhost:9000/app/notifications/groupmessage"
     let user_text = $(".dropdown-input").val()
 
-    if(user_text.length > 0){
-        $.ajax({
-            url: send_url,
-            type: 'POST',
-            data: {
-                "text": user_text,
-                "groupId": group_id,
-                "senderUsername": username,
-                "type": "image",
-            },
-            datatype: 'json',
-            success: function(result){
-                console.log("Message Sent!")
-            },
-            error: function(result){
-                console.log(result)
-            }
-        });
+    if(isImgUrl(user_text)){
+        if(user_text.length > 0){
+            $.ajax({
+                url: send_url,
+                type: 'POST',
+                data: {
+                    "text": user_text,
+                    "groupId": group_id,
+                    "senderUsername": username,
+                    "type": "image",
+                },
+                datatype: 'json',
+                success: function(result){
+                    console.log("Message Sent!")
+                },
+                error: function(result){
+                    console.log(result)
+                }
+            });
 
-        $.ajax({
-            url: notification_url,
-            type: 'POST',
-            data: {
-                "groupId": group_id,
-                "type": "group",
-            },
-            datatype: 'json',
-            error: function(result){
-                console.log(result)
-            }
-        })
+            $.ajax({
+                url: notification_url,
+                type: 'POST',
+                data: {
+                    "groupId": group_id,
+                    "type": "group",
+                },
+                datatype: 'json',
+                error: function(result){
+                    console.log(result)
+                }
+            })
 
-        socket.emit("Send Group Image", {"text": user_text, "senderUsername": username, "group_id": group_id})
-        
-        $(".message-wrapper").append(
-            "<div class=\"user-message\"><div class=\"user-message-content\"><img class=\"user-image\" src=" + user_text + "></div></div>")
+            socket.emit("Send Group Image", {"text": user_text, "senderUsername": username, "group_id": group_id})
+            
+            $(".message-wrapper").append(
+                "<div class=\"user-message\"><div class=\"user-message-content\"><img class=\"user-image\" src=" + user_text + "></div></div>")
 
-        $('html, body').scrollTop($(document).height());
+            $('html, body').scrollTop($(document).height());
+        }
     }
 }
+
+function isImgUrl(url) {
+    return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+  }
 
 $(function(){
 
