@@ -32,9 +32,20 @@ CheckUsernameNotEmpty = (request, response, next) => {
     next()
 }
 
+CheckPasswordNotEmpty = (request, response, next) => {
+
+    if(request.body.password == ""){
+        response.status(400).send({"message": "Password cannot be empty!"})
+        return;
+    }
+    
+    next()
+}
+
 let verifySignUp = {
     CheckIfUsernameExists,
-    CheckUsernameNotEmpty
+    CheckUsernameNotEmpty,
+    CheckPasswordNotEmpty,
 }
 
 module.exports = verifySignUp;
