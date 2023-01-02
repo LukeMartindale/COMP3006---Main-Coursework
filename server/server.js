@@ -13,8 +13,6 @@ let DirectMessage = require("../database/models/model.direct-message").DirectMes
 //set port used for server
 let port = 9000;
 
-console.log(process.env.NODE_ENV)
-
 //Get database credentials
 let credentials = {
     "name": "TheMartindale",
