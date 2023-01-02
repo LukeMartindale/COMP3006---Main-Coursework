@@ -25,8 +25,6 @@ let group = require("../database/app/app.group");
 let direct = require("../database/app/app.direct");
 let friend = require("../database/app/app.friend");
 let notification = require("../database/app/app.notification");
-const { CheckMessageNotEmpty } = require("../database/app/app.group");
-
 
 //Setup express app
 let app = express()
