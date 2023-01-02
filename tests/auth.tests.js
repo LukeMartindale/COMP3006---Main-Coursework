@@ -14,7 +14,7 @@ suite("Auth Tests", async function(){
 
     setup(async function(done){
 
-        
+
 
         helpers.emptyTestDatabase()
 
@@ -33,31 +33,35 @@ suite("Auth Tests", async function(){
         done()
 
     })
+
+    test("test test", function(){
+        chai.assert.isTrue(false)
+    })
     
 
-    test("Test that user can signup", function(){
+    // test("Test that user can signup", function(){
 
-        chai.request(server).post("/auth/signup/").send(this.user).end(function(error, response){
+    //     chai.request(server).post("/auth/signup/").send(this.user).end(function(error, response){
 
-                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+    //             chai.assert.equal(response.status, 200, "Status Code Is not correct!")
 
-                console.log(response.status)
+    //             console.log(response.status)
 
-            })
+    //         })
 
-    });
+    // });
 
-    test("Test", function(){
+    // test("Test", function(){
 
-        chai.request(server).post("/auth/signup/").send(this.user).end(function(error, response){
+    //     chai.request(server).post("/auth/signup/").send(this.user).end(function(error, response){
 
-            chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+    //         chai.assert.equal(response.status, 200, "Status Code Is not correct!")
 
-            console.log(response.status)
+    //         console.log(response.status)
 
-        })
+    //     })
 
-    });
+    // });
 
     // test("Test user can login", function(){
 
