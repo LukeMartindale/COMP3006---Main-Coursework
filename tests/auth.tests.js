@@ -91,7 +91,7 @@ suite("Auth Login Suite", function(){
 
         //create credentials for an existing user on the system
         this.existing_user = {
-            "username": "test_user",
+            "username": "existing_user",
             "password": "test_password",
         }
 
@@ -129,7 +129,25 @@ suite("Auth Login Suite", function(){
     test("Test user is able to login", function(done){
         chai.request(server).post("/auth/login/").send(this.existing_user).end(function(error, response) {
             chai.assert.equal(response.status, 200, "Status Code Is not correct!")
-            chai.assert.equal(JSON.parse(response.text).username, "test_user", "username is not correct!")
+            chai.assert.equal(JSON.parse(response.text).username, "existing_user", "username is not correct!")
+            done()
+        })
+    });
+
+    test("Test user cannot login with an invalid user", function(done){
+        let temp_user = {"username": "invalid_user", "password": "existing_user_password"}
+        chai.request(server).post("/auth/login/").send(temp_user).end(function(error, response) {
+            chai.assert.equal(response.status, 401, "Status Code Is not correct!")
+            chai.assert.equal(JSON.parse(response.text).message, "User Not Found", "User is not invalid")
+            done()
+        })
+    });
+
+    test("Test user cannot login with an invalid password", function(done){
+        let temp_user = {"username": "existing_user", "password": "invalid_password"}
+        chai.request(server).post("/auth/login/").send(temp_user).end(function(error, response) {
+            chai.assert.equal(response.status, 401, "Status Code Is not correct!")
+            chai.assert.equal(JSON.parse(response.text).message, "Invalid Password!", "Password is not invalid")
             done()
         })
     });
