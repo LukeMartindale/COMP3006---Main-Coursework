@@ -13,38 +13,27 @@ let DirectMessage = require("../database/models/model.direct-message").DirectMes
 //set port used for server
 let port = 9000;
 
-//Get database credentials
-// let credentials = JSON.parse(fs.readFileSync("../config/database-credentials.json"))
+console.log(process.env.NODE_ENV)
 
+//Get database credentials
 let credentials = {
     "name": "TheMartindale",
     "password": "dxWrO4fnEic4ay8A"
 }
 
-let url = ""
-
-if(process.env.NODE_ENV == undefined) {
-    url = `mongodb+srv://${credentials.name}:${credentials.password}@cluster0.rh5pgvb.mongodb.net/slantdb?retryWrites=true&w=majority`; 
-} else if (process.env.NODE_ENV == "test") {
-    url = `mongodb+srv://${credentials.name}:${credentials.password}@cluster0.rh5pgvb.mongodb.net/slanttestdb?retryWrites=true&w=majority`; 
-}
-
-console.log(url)
-console.log(process.env.NODE_ENV)
+url = `mongodb+srv://${credentials.name}:${credentials.password}@cluster0.rh5pgvb.mongodb.net/slantdb?retryWrites=true&w=majority`; 
 
 //connect to db
-mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
+if(process.env.NODE_ENV == undefined){
+    mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
     .then(() => {
-        console.log("Successfully connected to Database");
-        if(url.includes("slantdb")) {
-            console.log("Main Database")
-        } else if(url.includes("slanttestdb")) {
-            console.log("Test Database")
-        }
+        console.log("Successfully connected to Main Database");
     })
     .catch(error => {
         console.error("Error: ", error)
     })
+}
+
 
 //create server and export for use elsewhere
 let server = http.createServer(app)
