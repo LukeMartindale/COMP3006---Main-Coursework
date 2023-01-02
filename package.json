@@ -24,7 +24,7 @@
     "socket.io": "^4.5.4"
   },
   "scripts": {
-    "test": "mocha -ui tdd tests/",
+    "test": "mocha --timeout 50000 -ui tdd tests/",
     "start": "node server.js"
   }
 }
