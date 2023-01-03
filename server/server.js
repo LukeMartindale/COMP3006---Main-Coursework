@@ -108,9 +108,9 @@ io.on("connection", function(socket) {
 
 });
 
+module.exports = server
+
 //Set server to listen on port 9000
 server.listen(port, function(){
     console.log("Server is listening on port " + port);
 })
-
-module.exports = server

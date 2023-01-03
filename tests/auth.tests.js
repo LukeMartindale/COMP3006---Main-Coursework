@@ -6,14 +6,22 @@ chai.use(chaiHttp)
 
 let sinon = require("sinon");
 let verify = require("../database/auth/auth.verify.jwt")
-sinon.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
 
 let mongoose = require("mongoose");
 let User = require("../database/models/model.user").User;
 
-let server = require("../server/server");
-
 suite("Auth Signup Suite", function(){
+
+    suiteSetup(function(done){
+        this.sandbox = sinon.createSandbox()
+        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
+        this.server = require("../server/server");
+
+        setTimeout(function(){
+            done()
+        }, 500)
+
+    })
 
     suiteSetup(function(done){
 
@@ -38,12 +46,19 @@ suite("Auth Signup Suite", function(){
 
     })
 
-    suiteTeardown(function(){
+    suiteTeardown(function(done){
         mongoose.connection.close()
+        this.server.close()
+        this.sandbox.restore()
+
+        setTimeout(function(){
+            done()
+        }, 500)
+
     })
 
     setup(function(done){
-        chai.request(server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
             done()
         })
     })
@@ -55,14 +70,14 @@ suite("Auth Signup Suite", function(){
     })
 
     test("Test user can signup", function(done){
-        chai.request(server).post("/auth/signup/").send(this.new_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(this.new_user).end(function(error, response){
             chai.assert.equal(response.status, 200, "Status Code Is not correct!")
             done()
         })
     });
 
     test("Test cannot signup with a username which already exists", function(done){
-        chai.request(server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
             chai.assert.equal(response.status, 400, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "Username already exists!", "Incorrect Message")
             done()
@@ -71,7 +86,7 @@ suite("Auth Signup Suite", function(){
 
     test("Test cannot signup with an empty username", function(done){
         let temp_user = {"username": "", "password": "new_password"}
-        chai.request(server).post("/auth/signup/").send(temp_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(temp_user).end(function(error, response){
             chai.assert.equal(response.status, 400, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "Username cannot be empty!", "Incorrect Message")
             done()
@@ -80,7 +95,7 @@ suite("Auth Signup Suite", function(){
 
     test("Test cannot signup with an empty password", function(done){
         let temp_user = {"username": "new_user", "password": ""}
-        chai.request(server).post("/auth/signup/").send(temp_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(temp_user).end(function(error, response){
             chai.assert.equal(response.status, 400, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "Password cannot be empty!", "Incorrect Message")
             done()
@@ -90,6 +105,17 @@ suite("Auth Signup Suite", function(){
 });
 
 suite("Auth Login Suite", function(){
+
+    suiteSetup(function(done){
+        this.sandbox = sinon.createSandbox()
+        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
+        this.server = require("../server/server"); 
+        
+        setTimeout(function(){
+            done()
+        }, 500)
+
+    })
 
     suiteSetup(function(done){
 
@@ -114,12 +140,19 @@ suite("Auth Login Suite", function(){
 
     })
 
-    suiteTeardown(function(){
+    suiteTeardown(function(done){
         mongoose.connection.close()
+        this.server.close()
+        this.sandbox.restore()
+
+        setTimeout(function(){
+            done()
+        }, 500)
+
     })
 
     setup(function(done){
-        chai.request(server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
             done()
         })
     })
@@ -131,7 +164,7 @@ suite("Auth Login Suite", function(){
     })
 
     test("Test user is able to login", function(done){
-        chai.request(server).post("/auth/login/").send(this.existing_user).end(function(error, response) {
+        chai.request(this.server).post("/auth/login/").send(this.existing_user).end(function(error, response) {
             chai.assert.equal(response.status, 200, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).username, "existing_user", "username is not correct!")
             done()
@@ -140,7 +173,7 @@ suite("Auth Login Suite", function(){
 
     test("Test user cannot login with an invalid user", function(done){
         let temp_user = {"username": "invalid_user", "password": "existing_user_password"}
-        chai.request(server).post("/auth/login/").send(temp_user).end(function(error, response) {
+        chai.request(this.server).post("/auth/login/").send(temp_user).end(function(error, response) {
             chai.assert.equal(response.status, 401, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "User Not Found", "User is not invalid")
             done()
@@ -149,7 +182,7 @@ suite("Auth Login Suite", function(){
 
     test("Test user cannot login with an invalid password", function(done){
         let temp_user = {"username": "existing_user", "password": "invalid_password"}
-        chai.request(server).post("/auth/login/").send(temp_user).end(function(error, response) {
+        chai.request(this.server).post("/auth/login/").send(temp_user).end(function(error, response) {
             chai.assert.equal(response.status, 401, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "Invalid Password!", "Password is not invalid")
             done()
@@ -159,6 +192,17 @@ suite("Auth Login Suite", function(){
 });
 
 suite("Auth Logout Suite", function(){
+
+    suiteSetup(function(done){
+        this.sandbox = sinon.createSandbox()
+        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
+        this.server = require("../server/server"); 
+
+        setTimeout(function(){
+            done()
+        }, 500)
+
+    })
 
     suiteSetup(function(done){
 
@@ -185,18 +229,25 @@ suite("Auth Logout Suite", function(){
 
     })
 
-    suiteTeardown(function(){
+    suiteTeardown(function(done){
         mongoose.connection.close()
+        this.server.close()
+        this.sandbox.restore()
+
+        setTimeout(function(){
+            done()
+        }, 500)
+
     })
 
     setup(function(done){
-        chai.request(server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
             done()
         })
     })
 
     setup(function(done){
-        chai.request(server).post("/auth/login/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/login/").send(this.existing_user).end(function(error, response){
             done()
         })
     })
@@ -208,12 +259,10 @@ suite("Auth Logout Suite", function(){
     })
 
     test("Test that user can logout", function(){
-        chai.request(server).post("/auth/logout/").send(this.existing_user).end(function(error, response){
+        chai.request(this.server).post("/auth/logout/").send(this.existing_user).end(function(error, response){
             chai.assert.equal(response.status, 200, "Status Code Is not correct!")
             chai.assert.equal(JSON.parse(response.text).message, "Signed Out!", "User Not Signed Out!")
         })
     })
 
 });
-
-server.close()
