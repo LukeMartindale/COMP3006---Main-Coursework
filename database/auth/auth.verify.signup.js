@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 let User = require("../models/model.user").User;
 
 CheckIfUsernameExists = (request, response, next) => {

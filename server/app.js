@@ -92,7 +92,7 @@ app.post("/auth/login/", auth.LogIn)
 app.get("/auth/signup/", auth_routes.signupPage)
 app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists, auth_verify_signup.CheckUsernameNotEmpty, auth_verify_signup.CheckPasswordNotEmpty], auth.SignUp)
 
-app.post("/auth/logout/", auth.LogOut)
+app.post("/auth/logout/",[auth_verify_jwt.verifyToken], auth.LogOut)
 
 
 

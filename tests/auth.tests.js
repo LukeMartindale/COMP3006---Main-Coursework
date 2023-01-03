@@ -4,6 +4,10 @@ let chai = require("chai");
 let chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 
+let sinon = require("sinon");
+let verify = require("../database/auth/auth.verify.jwt")
+sinon.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
+
 let mongoose = require("mongoose");
 let User = require("../database/models/model.user").User;
 
@@ -151,6 +155,64 @@ suite("Auth Login Suite", function(){
             done()
         })
     });
+
+});
+
+suite("Auth Logout Suite", function(){
+
+    suiteSetup(function(done){
+
+        //create credentials for an existing user on the system
+        this.existing_user = {
+            "username": "existing_user",
+            "password": "test_password",
+        }
+
+        //create credentials for a new user to the system
+        this.new_user = {
+            "username": "new_user",
+            "password": "new_password",
+        }
+
+        this.session = ""
+
+        //Connect to test database
+        let url = `mongodb+srv://TheMartindale:dxWrO4fnEic4ay8A@cluster0.rh5pgvb.mongodb.net/slanttestdb?retryWrites=true&w=majority`;
+        mongoose.connect(url)
+        .then(function(){
+            done()
+        })
+
+    })
+
+    suiteTeardown(function(){
+        mongoose.connection.close()
+    })
+
+    setup(function(done){
+        chai.request(server).post("/auth/signup/").send(this.existing_user).end(function(error, response){
+            done()
+        })
+    })
+
+    setup(function(done){
+        chai.request(server).post("/auth/login/").send(this.existing_user).end(function(error, response){
+            done()
+        })
+    })
+
+    teardown(function(done){
+        User.deleteMany({}, (error) => {
+            done()
+        })
+    })
+
+    test("Test that user can logout", function(){
+        chai.request(server).post("/auth/logout/").send(this.existing_user).end(function(error, response){
+            chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+            chai.assert.equal(JSON.parse(response.text).message, "Signed Out!", "User Not Signed Out!")
+        })
+    })
 
 });
 
