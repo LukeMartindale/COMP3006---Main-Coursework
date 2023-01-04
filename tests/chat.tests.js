@@ -4,23 +4,20 @@ let chai = require("chai");
 let chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 
-let sinon = require("sinon");
-let verify = require("../database/auth/auth.verify.jwt")
-
 let mongoose = require("mongoose");
 let User = require("../database/models/model.user").User;
+let Group = require("../database/models/model.group").Group;
 let Message = require("../database/models/model.message").Message;
 
 suite("Chat Group Suite", function(){
 
     suiteSetup(function(done){
-        this.sandbox = sinon.createSandbox()
-        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
         this.server = require("../server/server"); 
 
         setTimeout(function(){
             done()
         }, 500)
+
     })
 
     suiteSetup(function(done){
@@ -29,26 +26,6 @@ suite("Chat Group Suite", function(){
         this.existing_user = {
             "username": "test-user",
             "password": "test-password",
-        }
-
-        this.existing_user_2 = {
-            "username": "test-user-2",
-            "password": "test-password-2",
-        }
-
-
-        //create credentials for a new user to the system
-        this.new_user = {
-            "username": "new-user",
-            "password": "new-password",
-        }
-
-        this.new_message = {
-            "text": "new-message",
-            "groupId": "test-id",
-            "senderId": String,
-            "senderUsername": "test-user",
-            "type": "group-message",
         }
 
         //Connect to test database
@@ -63,7 +40,7 @@ suite("Chat Group Suite", function(){
     suiteTeardown(function(done){
         mongoose.connection.close()
         this.server.close()
-        this.sandbox.restore()
+        // this.sandbox.restore()
 
         setTimeout(function(){
             done()
@@ -77,25 +54,28 @@ suite("Chat Group Suite", function(){
         })
     })
 
-    setup(function(done){
-        chai.request(this.server).post("/auth/signup/").send(this.existing_user_2).end(function(error, response){
-            done()
-        })
-    })
-
     teardown(function(done){
         User.deleteMany({}, (error) => {
             done()
         })
     })
 
-    test("Test user is able to login", function(done){
-        chai.request(this.server).post("/auth/login/").send(this.existing_user).end(function(error, response) {
-            chai.assert.equal(response.status, 200, "Status Code Is not correct!")
-            chai.assert.equal(JSON.parse(response.text).username, "test-user", "username is not correct!")
+    teardown(function(done){
+        Group.deleteMany({}, (error) => {
             done()
         })
-    });
+    })
+
+    test("Test that user can create a new group", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.existing_user).end(function(error, response){
+            agent.post("/app/groups/creategroup/").send({"group_name": "test_group"}).end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(JSON.parse(response.text).message, "Group was created!", "Group was not created!")
+                done()
+            })
+        })
+    })
 
     test("Test user can send a message to group", function(done){
         done()

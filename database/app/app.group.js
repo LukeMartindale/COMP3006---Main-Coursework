@@ -3,7 +3,6 @@ let Message = require("../models/model.message").Message;
 let Request = require("../models/model.request").Request;
 let User = require("../models/model.user").User;
 
-const { request, response } = require("express");
 let jwt = require("jsonwebtoken");
 let mongoose = require("mongoose");
 

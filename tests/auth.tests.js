@@ -4,17 +4,12 @@ let chai = require("chai");
 let chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 
-let sinon = require("sinon");
-let verify = require("../database/auth/auth.verify.jwt")
-
 let mongoose = require("mongoose");
 let User = require("../database/models/model.user").User;
 
 suite("Auth Signup Suite", function(){
 
     suiteSetup(function(done){
-        this.sandbox = sinon.createSandbox()
-        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
         this.server = require("../server/server");
 
         setTimeout(function(){
@@ -49,7 +44,6 @@ suite("Auth Signup Suite", function(){
     suiteTeardown(function(done){
         mongoose.connection.close()
         this.server.close()
-        this.sandbox.restore()
 
         setTimeout(function(){
             done()
@@ -107,8 +101,6 @@ suite("Auth Signup Suite", function(){
 suite("Auth Login Suite", function(){
 
     suiteSetup(function(done){
-        this.sandbox = sinon.createSandbox()
-        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
         this.server = require("../server/server"); 
         
         setTimeout(function(){
@@ -143,7 +135,6 @@ suite("Auth Login Suite", function(){
     suiteTeardown(function(done){
         mongoose.connection.close()
         this.server.close()
-        this.sandbox.restore()
 
         setTimeout(function(){
             done()
@@ -194,8 +185,6 @@ suite("Auth Login Suite", function(){
 suite("Auth Logout Suite", function(){
 
     suiteSetup(function(done){
-        this.sandbox = sinon.createSandbox()
-        this.sandbox.stub(verify, 'verifyToken').callsFake((request, response, next) => next())
         this.server = require("../server/server"); 
 
         setTimeout(function(){
@@ -218,8 +207,6 @@ suite("Auth Logout Suite", function(){
             "password": "new_password",
         }
 
-        this.session = ""
-
         //Connect to test database
         let url = `mongodb+srv://TheMartindale:dxWrO4fnEic4ay8A@cluster0.rh5pgvb.mongodb.net/slanttestdb?retryWrites=true&w=majority`;
         mongoose.connect(url)
@@ -232,7 +219,6 @@ suite("Auth Logout Suite", function(){
     suiteTeardown(function(done){
         mongoose.connection.close()
         this.server.close()
-        this.sandbox.restore()
 
         setTimeout(function(){
             done()
@@ -246,23 +232,20 @@ suite("Auth Logout Suite", function(){
         })
     })
 
-    setup(function(done){
-        chai.request(this.server).post("/auth/login/").send(this.existing_user).end(function(error, response){
-            done()
-        })
-    })
-
     teardown(function(done){
         User.deleteMany({}, (error) => {
             done()
         })
     })
 
-    test("Test that user can logout", function(){
-        chai.request(this.server).post("/auth/logout/").send(this.existing_user).end(function(error, response){
-            chai.assert.equal(response.status, 200, "Status Code Is not correct!")
-            chai.assert.equal(JSON.parse(response.text).message, "Signed Out!", "User Not Signed Out!")
+    test("Test that user can logout", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.existing_user).end(function(error, response){
+            agent.post("/auth/logout/").send(this.existing_user).end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(JSON.parse(response.text).message, "Signed Out!", "User Not Signed Out!")
+                done()
+            })
         })
     })
-
 });
