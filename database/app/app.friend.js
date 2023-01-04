@@ -91,8 +91,6 @@ CheckNotSendingRequestToSelf = async (request, response, next) => {
 
 UnfriendUser = async (request, response) => {
 
-    console.log(jwt.decode(request.session.token).id)
-
     let user = await User.findById(jwt.decode(request.session.token).id)
     let friend = await User.findById(request.body.friendId)
 
