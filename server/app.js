@@ -75,8 +75,8 @@ app.post("/app/notifications/directmessage/resolve/", [auth_verify_jwt.verifyTok
 app.get("/app/account", [auth_verify_jwt.verifyToken], routes.accountPage)
 
 //Route for chats
-app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken], group_routes.groupchatPage)
-app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken], group_routes.groupchatsettingsPage)
+app.get("/chat/group/:id/", [auth_verify_jwt.verifyToken, group.CheckUserIsInGroup], group_routes.groupchatPage)
+app.get("/chat/group/:id/settings/", [auth_verify_jwt.verifyToken, group.CheckUserIsInGroup], group_routes.groupchatsettingsPage)
 app.post("/chat/group/", [auth_verify_jwt.verifyToken, group.CheckMessageNotEmpty], group.SendTextMessage)
 app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlreadyInGroup, group.CheckNotAlreadyInvited], group.InviteFriendToGroup)
 app.post("/chat/group/leave/", [auth_verify_jwt.verifyToken], group.LeaveGroup)

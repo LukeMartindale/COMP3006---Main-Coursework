@@ -113,6 +113,17 @@ DeleteGroup = async (request, response) => {
 
 }
 
+CheckUserIsInGroup = async(request, response, next) => {
+
+    let group = await Group.findById(request.params.id).exec()
+    if(group.group_members.includes(jwt.decode(request.session.token).id)){
+        next()
+    } else {
+        response.status(400).send({"message": "User is not in this group!"})
+    }
+
+}
+
 CheckIfAlreadyInGroup = async(request, response, next) => {
 
     let group = await Group.findById(request.body.groupId).exec()
@@ -179,6 +190,7 @@ let group = {
     CheckGroupNameNotEmpty,
     CheckNotAlreadyInvited,
     CheckMessageNotEmpty,
+    CheckUserIsInGroup,
 }
 
 module.exports = group
