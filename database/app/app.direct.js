@@ -1,9 +1,10 @@
 let Message = require("../models/model.message").Message;
 
 let jwt = require("jsonwebtoken");
+const { DirectMessage } = require("../models/model.direct-message");
 
 SendTextMessage = (request, response) => {
-    
+
     if(request.body.type == "text") {
         let message = new Message({
             text: request.body.text,
@@ -52,9 +53,21 @@ CheckMessageNotEmpty = async(request, response, next) => {
     
 }
 
+CheckUserIsInGroup = async(request, response, next) => {
+
+    let directmessage = await DirectMessage.findById(request.params.id).exec()
+    if(directmessage.group_members.includes(jwt.decode(request.session.token).id)){
+        next()
+    } else {
+        response.status(400).send({"message": "User is not in this dm!"})
+    }
+
+}
+
 let direct = {
     SendTextMessage,
     CheckMessageNotEmpty,
+    CheckUserIsInGroup,
 }
 
 module.exports = direct

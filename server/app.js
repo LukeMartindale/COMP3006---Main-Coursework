@@ -82,7 +82,7 @@ app.post("/chat/group/invite/", [auth_verify_jwt.verifyToken, group.CheckIfAlrea
 app.post("/chat/group/leave/", [auth_verify_jwt.verifyToken], group.LeaveGroup)
 app.post("/chat/group/delete", [auth_verify_jwt.verifyToken], group.DeleteGroup)
 
-app.get("/chat/direct/:id/", [auth_verify_jwt.verifyToken], direct_routes.directmessagePage)
+app.get("/chat/direct/:id/", [auth_verify_jwt.verifyToken, direct.CheckUserIsInGroup], direct_routes.directmessagePage)
 app.post("/chat/direct/", [auth_verify_jwt.verifyToken, direct.CheckMessageNotEmpty], direct.SendTextMessage)
 
 //Routes for user auth functions
