@@ -8,6 +8,8 @@ let mongoose = require("mongoose");
 let User = require("../database/models/model.user").User;
 let Request = require("../database/models/model.request").Request;
 let Group = require("../database/models/model.group").Group;
+let DirectMessage = require("../database/models/model.direct-message").DirectMessage;
+
 
 suite("Notifications Suite", function(){
 
@@ -116,6 +118,12 @@ suite("Notifications Suite", function(){
         })
     })
 
+    teardown(function(done){
+        DirectMessage.deleteMany({}, (error) => {
+            done()
+        })
+    })
+
     test("Test can get notifications page", function(done){
         let agent = chai.request.agent(this.server)
         agent.post("/auth/login/").send(this.existing_user).end(function(error, response){
@@ -150,6 +158,10 @@ suite("Notifications Suite", function(){
             })
         })
     });
+    
+    test("Test that user cannot accept notifcation from someone they are already friends with", function(done){
+        done()
+    })
 
     test("Test that user can decline a request", function(done){
         let agent = chai.request.agent(this.server)

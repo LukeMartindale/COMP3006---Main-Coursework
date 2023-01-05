@@ -98,6 +98,12 @@ suite("Chat Group Suite", function(){
         })
     })
 
+    teardown(function(done){
+        DirectMessage.deleteMany({}, (error) => {
+            done()
+        })
+    })
+
     test("Test that user can get groups page", function(done){
         let agent = chai.request.agent(this.server)
         agent.post("/auth/login/").send(this.new_user).end(function(error, response){
