@@ -71,6 +71,12 @@ suite("Notifications Suite", function(){
     })
 
     setup(function(done){
+        chai.request(this.server).post("/auth/signup/").send(this.other_user).end(function(error, response){
+            done()
+        })
+    })
+
+    setup(function(done){
         let agent = chai.request.agent(this.server)
         agent.post("/auth/login/").send(this.existing_user).end(async function(error, response){
             let new_user = await User.findOne({"username": "new-user"})
@@ -98,6 +104,60 @@ suite("Notifications Suite", function(){
                 done()
             });
         });
+    })
+    
+    setup(async function(){
+
+        let group = await Group.findOne({"group_name": "existing_group"})
+        let other_user = await User.findOne({"username": "other-user"})
+
+        group.group_members.push(other_user._id.toString())
+
+        await group.save()
+    })
+
+    setup(function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.existing_user).end(async function(error, response){
+            let group = await Group.findOne({"group_name": "existing_group"})
+            agent.post("/app/notifications/groupmessage/").send({"groupId": group._id.toString(), "type": "group"}).end(function(error, response){
+                done()
+            });
+        })
+    })
+
+    setup(async function(){
+        let existing_user = await User.findOne({"username": this.existing_user.username})
+        let other_user = await User.findOne({"username": this.other_user.username})
+
+        let directmessage = new DirectMessage({
+            "group_members": [existing_user._id.toString(), other_user._id.toString()]
+        })
+        await directmessage.save()
+
+        dm = await DirectMessage.findOne()
+        existing_user.friends.push({
+            "friend": other_user._id,
+            "dm_id": dm._id
+        })
+        other_user.friends.push({
+            "friend": existing_user._id,
+            "dm_id": dm._id
+        })
+
+        await existing_user.save()
+        await other_user.save()
+
+    })
+
+    setup(function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.existing_user).end(async function(error, response){
+            let other_user = await User.findOne({"username": "other-user"})
+            agent.post("/app/notifications/groupmessage/").send({"type": "direct","groupId": other_user.friends[0].dm_id.toString()}).end(function(error, response){
+                done()
+            });
+        })
     })
 
     teardown(function(done){
@@ -158,10 +218,6 @@ suite("Notifications Suite", function(){
             })
         })
     });
-    
-    test("Test that user cannot accept notifcation from someone they are already friends with", function(done){
-        done()
-    })
 
     test("Test that user can decline a request", function(done){
         let agent = chai.request.agent(this.server)
@@ -174,6 +230,38 @@ suite("Notifications Suite", function(){
             })
         })
     })
+
+    test("Test can get list of unread group messages", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.other_user).end(async function(error, response){
+            let other_user = await User.findOne({"username": "other-user"})
+            let group = await Group.findOne({"group_name": "existing_group"})
+            agent.get("/app/notifications/group/unread/").end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(response.body.group_requests[0].senderId, group._id.toString(), "SenderId is not the correct Group ID!")
+                chai.assert.equal(response.body.group_requests[0].recipientId, other_user._id.toString(), "Recipient ID is not the correct User ID!")
+                chai.assert.equal(response.body.group_requests[0].type, "group-message", "notification type is not correct!")
+                chai.assert.equal(response.body.group_requests[0].status, "pending", "notification status is not correct!")
+                done()
+            })
+        })
+    });
+
+    test("Test can get list of unread direct messages", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.other_user).end(async function(error, response){
+            let other_user = await User.findOne({"username": "other-user"})
+            let existing_user = await User.findOne({"username": "existing-user"})
+            agent.get("/app/notifications/direct/unread/").end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(response.body.direct_requests[0].senderId, existing_user._id.toString(), "SenderId is not the correct Group ID!")
+                chai.assert.equal(response.body.direct_requests[0].recipientId, other_user._id.toString(), "Recipient ID is not the correct User ID!")
+                chai.assert.equal(response.body.direct_requests[0].type, "direct-message", "notification type is not correct!")
+                chai.assert.equal(response.body.direct_requests[0].status, "pending", "notification status is not correct!")
+                done()
+            })
+        })
+    });
     
 
 });

@@ -71,7 +71,6 @@ async function groupmessageNotification(request, response) {
 
     if(request.body.type == "group"){
         let group = await Group.findById(request.body.groupId).exec()
-
         for(let i=0; i<group.group_members.length; i++){
             if(group.group_members[i] != jwt.decode(request.session.token).id){
                 let notification = new Request({
@@ -88,7 +87,6 @@ async function groupmessageNotification(request, response) {
         response.status(200).send({"message": "Group message notification(s) sent"})
     } else if (request.body.type == "direct"){
         let dm = await DirectMessage.findById(request.body.groupId).exec()
-
         for(let i=0; i<dm.group_members.length; i++){
             if(dm.group_members[i] != jwt.decode(request.session.token).id){
                 let notification = new Request({
@@ -102,13 +100,8 @@ async function groupmessageNotification(request, response) {
                 notification.save()
             }
         }
-
+        response.status(200).send({"message": "Direct message notification(s) sent"})
     }
-
-
-
-
-
 }
 
 async function readgroupmessageNotification(request, response) {
