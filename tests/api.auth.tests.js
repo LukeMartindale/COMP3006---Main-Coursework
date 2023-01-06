@@ -180,6 +180,16 @@ suite("Auth Login Suite", function(){
         })
     });
 
+    test("Test can get account page", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.existing_user).end(function(error, response){
+            agent.get("/app/account").end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                done()
+            })
+        })
+    });
+
 });
 
 suite("Auth Logout Suite", function(){

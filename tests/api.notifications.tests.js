@@ -262,6 +262,28 @@ suite("Notifications Suite", function(){
             })
         })
     });
+
+    test("Test can resolve unread group messages", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.other_user).end(async function(error, response){
+            let group = await Group.findOne({"group_name": "existing_group"})
+            agent.post("/app/notifications/groupmessage/resolve/").send({"groupId": group._id.toString}).end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(response.body.message, "Marked unread messages as read!", "Group Message Notifications where not resolved")
+                done()
+            })
+        })
+    });
     
+    test("Test can resolve unread direct messages", function(done){
+        let agent = chai.request.agent(this.server)
+        agent.post("/auth/login/").send(this.other_user).end(async function(error, response){
+            agent.post("/app/notifications/directmessage/resolve/").send().end(function(error, response){
+                chai.assert.equal(response.status, 200, "Status Code Is not correct!")
+                chai.assert.equal(response.body.message, "Marked unread messages as read!", "Group Message Notifications where not resolved")
+                done()
+            })
+        })
+    });
 
 });
