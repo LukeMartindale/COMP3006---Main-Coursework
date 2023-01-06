@@ -14,7 +14,7 @@ let DirectMessage = require("../database/models/model.direct-message").DirectMes
 suite("Chat Group Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server"); 
+        this.server = require("../server/server").server; 
 
         setTimeout(function(){
             done()
@@ -306,7 +306,7 @@ suite("Chat Group Suite", function(){
 suite("Chat Direct Message Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server"); 
+        this.server = require("../server/server").server; 
 
         setTimeout(function(){
             done()

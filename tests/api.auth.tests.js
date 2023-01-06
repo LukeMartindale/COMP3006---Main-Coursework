@@ -10,7 +10,7 @@ let User = require("../database/models/model.user").User;
 suite("Auth Signup Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server");
+        this.server = require("../server/server").server;
 
         setTimeout(function(){
             done()
@@ -101,7 +101,7 @@ suite("Auth Signup Suite", function(){
 suite("Auth Login Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server"); 
+        this.server = require("../server/server").server; 
         
         setTimeout(function(){
             done()
@@ -195,7 +195,7 @@ suite("Auth Login Suite", function(){
 suite("Auth Logout Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server"); 
+        this.server = require("../server/server").server; 
 
         setTimeout(function(){
             done()

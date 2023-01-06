@@ -47,9 +47,7 @@ io.on("connection", function(socket) {
     })
 
     socket.on("Send Group Message", async function(message) {
-
         socket.broadcast.emit("Group-Message:" + message.group_id, message)
-
         let group = await Group.findById(message.group_id).exec()
 
         for(let i=0; i< group.group_members.length; i++){
@@ -108,7 +106,8 @@ io.on("connection", function(socket) {
 
 });
 
-module.exports = server
+module.exports.server = server
+module.exports.io = io
 
 //Set server to listen on port 9000
 server.listen(port, function(){

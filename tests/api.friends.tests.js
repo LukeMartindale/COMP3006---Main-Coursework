@@ -12,7 +12,7 @@ let DirectMessage = require("../database/models/model.direct-message").DirectMes
 suite("Friends Suite", function(){
 
     suiteSetup(function(done){
-        this.server = require("../server/server"); 
+        this.server = require("../server/server").server; 
 
         setTimeout(function(){
             done()
