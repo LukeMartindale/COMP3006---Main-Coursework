@@ -8,8 +8,6 @@ let chaiHttp = require("chai-http")
 chai.use(chaiHttp)
 
 let httpMocks = require("node-mocks-http");
-let mongoose = require("mongoose");
-let MockMongooseModel = require('mock-mongoose-model');
 
 let sinon = require('sinon');
 
