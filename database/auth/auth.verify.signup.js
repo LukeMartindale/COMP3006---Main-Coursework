@@ -2,11 +2,7 @@ let User = require("../models/model.user").User;
 
 CheckIfUsernameExists = (request, response, next) => {
 
-    console.log("TEST")
-
     User.findOne({"username": request.body.username}).exec((error, user) => {
-
-        console.log("TEST")
 
         if(error) {
             response.status(500).send({"message": error});
