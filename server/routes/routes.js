@@ -1,5 +1,5 @@
-let database = require("../../database/database")
 let jwt = require("jsonwebtoken")
+let config = require("../../config/auth.config.js")
 
 let User = require("../../database/models/model.user").User;
 let Group = require("../../database/models/model.group").Group;
@@ -52,21 +52,21 @@ async function creategroupPage(request, response) {
 
 }
 
+//home page
 async function homePage(request, response) {
+    let token = request.session.token;
 
-    let user_id = jwt.decode(request.session.token).id
-    
-    user = await User.findById(user_id).exec()
+    if(!token) {
+        return response.status(200).redirect("/auth/login/")
+    }
 
-    response.render("home-page", {"id": user_id, "username": user.username})
-
-}
-
-async function homePageTest(request, response) {
-    
-    let users = await database.getTest();
-
-    response.render("home_page_test", {"id": request.params.id, "users": users})
+    jwt.verify(token, config.secret, (error, decoded) => {
+        if(error){
+            return response.status(401).send({"message": "Not Authorised!"})
+        }
+        request.userId = decoded.id;
+        return response.status(200).redirect("/app/groups/")
+    });
 }
 
 module.exports.groupsPage = groupsPage;
@@ -77,5 +77,3 @@ module.exports.accountPage = accountPage;
 module.exports.creategroupPage = creategroupPage;
 
 module.exports.homePage = homePage;
-module.exports.homePageTest = homePageTest;
-

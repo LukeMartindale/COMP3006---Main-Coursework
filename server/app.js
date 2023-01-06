@@ -94,17 +94,6 @@ app.post("/auth/signup/", [auth_verify_signup.CheckIfUsernameExists, auth_verify
 
 app.post("/auth/logout/",[auth_verify_jwt.verifyToken], auth.LogOut)
 
-
-
-//TEST ROUTES
-//test home page
-app.get("/home-page/", [auth_verify_jwt.verifyToken], routes.homePage)
-app.get("/", routes.homePageTest)
-app.get("/:id/", routes.homePageTest, (request, response) => {
-    response.send(request.params)
-})
-//Check if user is logged in
-app.get("/auth/loggedin/", [auth_verify_jwt.verifyToken], auth_routes.LoggedIn)
-
+app.get("/", routes.homePage)
 
 module.exports.app = app;

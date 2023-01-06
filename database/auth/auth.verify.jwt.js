@@ -6,7 +6,6 @@ verifyToken = (request, response, next) => {
     let token = request.session.token;
 
     if(!token) {
-        // return response.status(403).send({"message": "No token!"});
         return response.status(403).redirect("http://localhost:9000/auth/login");
     };
 
