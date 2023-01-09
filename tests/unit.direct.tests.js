@@ -12,6 +12,9 @@ let httpMocks = require("node-mocks-http");
 
 let mongoose = require("mongoose");
 let DirectMessage = require("../database/models/model.direct-message").DirectMessage;
+let User = require("../database/models/model.user").User;
+let Message = require("../database/models/model.message").Message;
+
 
 let sinon = require('sinon');
 
@@ -69,6 +72,18 @@ suite("Direct SendTextMessage Suite", function(){
         setTimeout(function(){
             done()
         }, 500)
+    })
+
+    teardown(function(done){
+        User.deleteMany({}, (error) => {
+            done()
+        })
+    })
+
+    teardown(function(done){
+        Message.deleteMany({}, (error) => {
+            done()
+        })
     })
 
     test("Test that SendTextmessage returns correct response when sending text message", async function(){
