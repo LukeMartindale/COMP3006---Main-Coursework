@@ -1,22 +1,15 @@
 let User = require("../models/model.user").User;
 
-CheckIfUsernameExists = (request, response, next) => {
+CheckIfUsernameExists = async (request, response, next) => {
 
-    User.findOne({"username": request.body.username}).exec((error, user) => {
+    let user = await User.findOne({"username": request.body.username})
 
-        if(error) {
-            response.status(500).send({"message": error});
-            return;
-        };
+    if(user) {
+        response.status(400).send({"message": "Username already exists!"})
+        return;
+    };
 
-        if(user) {
-            response.status(400).send({"message": "Username already exists!"})
-            return;
-        };
-
-        next();
-
-    });
+    next();
 
 }
 
