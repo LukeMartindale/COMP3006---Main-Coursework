@@ -1,7 +1,7 @@
 let Message = require("../models/model.message").Message;
 
 let jwt = require("jsonwebtoken");
-const { DirectMessage } = require("../models/model.direct-message");
+let DirectMessage = require("../models/model.direct-message").DirectMessage;
 
 SendTextMessage = (request, response) => {
 
@@ -15,13 +15,9 @@ SendTextMessage = (request, response) => {
             type: 'direct-message',
         })
 
-        message.save((error, message) => {
-            if(error){
-                response.status(500).send({"message": error})
-                return;
-            }
-            response.status(200).send({"message": "Message was sent!"})
-        });
+        message.save()
+
+        response.status(200).send({"message": "Message was sent!"})
     }
     if(request.body.type == "image") {
         let message = new Message({
@@ -33,13 +29,9 @@ SendTextMessage = (request, response) => {
             type: 'direct-image',
         })
 
-        message.save((error, message) => {
-            if(error){
-                response.status(500).send({"message": error})
-                return;
-            }
-            response.status(200).send({"message": "Message was sent!"})
-        });
+        message.save()
+
+        response.status(200).send({"message": "Message was sent!"})
     }
 }
 
@@ -55,7 +47,7 @@ CheckMessageNotEmpty = async(request, response, next) => {
 
 CheckUserIsInGroup = async(request, response, next) => {
 
-    let directmessage = await DirectMessage.findById(request.params.id).exec()
+    let directmessage = await DirectMessage.findById(request.params.id)
     if(directmessage.group_members.includes(jwt.decode(request.session.token).id)){
         next()
     } else {
