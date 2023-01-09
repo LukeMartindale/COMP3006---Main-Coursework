@@ -6,7 +6,7 @@ let User = require("../models/model.user").User;
 let jwt = require("jsonwebtoken");
 let mongoose = require("mongoose");
 
-CreateGroup = (request, response) => {
+CreateGroup = async (request, response) => {
 
     let group = new Group({
         group_name: request.body.group_name,
@@ -14,14 +14,9 @@ CreateGroup = (request, response) => {
         group_members: jwt.decode(request.session.token).id,
     })
 
-    group.save((error, group) => {
-        if(error){
-            response.status(500).send({"message": error});
-            return
-        }
-        response.status(200).send({"message": "Group was created!"})
-        
-    })
+    await group.save()
+
+    response.status(200).send({"message": "Group was created!"})
 
 }
 
@@ -37,13 +32,9 @@ SendTextMessage = (request, response) => {
             type: 'group-message',
         })
     
-        message.save((error, message) => {
-            if(error){
-                response.status(500).send({"message": error})
-                return;
-            }
-            response.status(200).send({"message": "Message was sent!"})
-        });
+        message.save()
+
+        response.status(200).send({"message": "Message was sent!"})
     }
     if(request.body.type == "image") {
         let message = new Message({
@@ -55,13 +46,9 @@ SendTextMessage = (request, response) => {
             type: 'group-image',
         })
 
-        message.save((error, message) => {
-            if(error){
-                response.status(500).send({"message": error})
-                return;
-            }
-            response.status(200).send({"message": "Message was sent!"})
-        });
+        message.save()
+
+        response.status(200).send({"message": "Message was sent!"})
     }
     
 
@@ -83,13 +70,9 @@ InviteFriendToGroup = async (request, response) => {
         responseRequired: true,
     });
 
-    user_request.save((error, message) => {
-        if(error){
-            response.status(500).send({"message": error})
-            return;
-        }
-        response.status(200).send({"message": "Group Invite Sent!"})
-    });
+    await user_request.save();
+
+    response.status(200).send({"message": "Group Invite Sent!"})
 
 };
 
@@ -100,7 +83,7 @@ LeaveGroup = async (request, response) => {
 
     group.group_members = group.group_members.filter(e => e != user_id)
 
-    group.save()
+    await group.save()
 
     response.status(200).send({"message": "Group left!"})
 
@@ -115,7 +98,7 @@ DeleteGroup = async (request, response) => {
 
 CheckUserIsInGroup = async(request, response, next) => {
 
-    let group = await Group.findById(request.params.id).exec()
+    let group = await Group.findById(request.params.id)
     if(group.group_members.includes(jwt.decode(request.session.token).id)){
         next()
     } else {
@@ -126,7 +109,7 @@ CheckUserIsInGroup = async(request, response, next) => {
 
 CheckIfAlreadyInGroup = async(request, response, next) => {
 
-    let group = await Group.findById(request.body.groupId).exec()
+    let group = await Group.findById(request.body.groupId)
     if(group.group_members.includes(request.body.recipientId)){
         response.status(400).send({"message": "User is already in group!"});
         return;
@@ -157,7 +140,7 @@ CheckMessageNotEmpty = async(request, response, next) => {
 
 CheckNotAlreadyInvited = async(request, response, next) => {
 
-    let user_request = await Request.findOne({groupId: request.body.groupId, recipientId: request.body.recipientId, status: 'pending'}).exec()
+    let user_request = await Request.findOne({groupId: request.body.groupId, recipientId: request.body.recipientId, status: 'pending'})
 
     if(user_request){
         response.status(400).send({"message": "User has already been invited!"})
@@ -170,7 +153,7 @@ CheckNotAlreadyInvited = async(request, response, next) => {
 
 CheckIsGroupAdmin = async(request, response, next) => {
 
-    let group = await Group.findById(request.body.groupId).exec()
+    let group = await Group.findById(request.body.groupId)
 
     if(group.group_admin == jwt.decode(request.session.token).id){
         next()
@@ -191,6 +174,7 @@ let group = {
     CheckNotAlreadyInvited,
     CheckMessageNotEmpty,
     CheckUserIsInGroup,
+    CheckIsGroupAdmin,
 }
 
 module.exports = group

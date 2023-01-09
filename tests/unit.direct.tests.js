@@ -18,7 +18,7 @@ let Message = require("../database/models/model.message").Message;
 
 let sinon = require('sinon');
 
-suite("Direct SendTextMessage Suite", function(){
+suite("Direct Message Suite", function(){
 
     suiteSetup(function(done){
         this.server = require("../server/server").server;
