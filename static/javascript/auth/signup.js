@@ -1,6 +1,6 @@
 $(function(){
 
-    let signup_url = "http://"+ window.location.host + "/auth/signup/"
+    let signup_url = "https://"+ window.location.host + "/auth/signup/"
 
     $("#signup-signup-button").click(function(){
 

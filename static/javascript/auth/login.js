@@ -1,6 +1,6 @@
 $(function(){
 
-    let login_url = "http://"+ window.location.host + "/auth/login/"
+    let login_url = "https://"+ window.location.host + "/auth/login/"
 
     $("#login-login-button").click(function(){
 
