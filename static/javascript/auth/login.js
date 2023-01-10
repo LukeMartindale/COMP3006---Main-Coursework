@@ -16,7 +16,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.href = "http://"+ window.location.host + "/app/groups"
+                window.location.href = "https://"+ window.location.host + "/app/groups"
             },
             error:  function(result){
                 if(result.responseJSON.message == 'User Not Found'){
@@ -34,7 +34,7 @@ $(function(){
 
     $("#login-signup-button").click(function(){
 
-        window.location.replace("http://"+ window.location.host + "/auth/signup/")
+        window.location.replace("https://"+ window.location.host + "/auth/signup/")
 
     });
 
