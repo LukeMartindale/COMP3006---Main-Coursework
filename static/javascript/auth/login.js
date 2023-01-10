@@ -1,6 +1,6 @@
 $(function(){
 
-    let login_url = "https://"+ window.location.host + "/auth/login/"
+    let login_url = "http://localhost:9000/auth/login/"
 
     $("#login-login-button").click(function(){
 
@@ -16,7 +16,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.href = "https://"+ window.location.host + "/app/groups"
+                window.location.href = "http://localhost:9000/app/groups"
             },
             error:  function(result){
                 if(result.responseJSON.message == 'User Not Found'){
@@ -34,7 +34,7 @@ $(function(){
 
     $("#login-signup-button").click(function(){
 
-        window.location.replace("https://"+ window.location.host + "/auth/signup/")
+        window.location.replace("http://localhost:9000/auth/signup/")
 
     });
 

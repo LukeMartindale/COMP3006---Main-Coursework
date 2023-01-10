@@ -21,6 +21,8 @@ let credentials = {
 
 url = `mongodb+srv://${credentials.name}:${credentials.password}@cluster0.rh5pgvb.mongodb.net/slantdb?retryWrites=true&w=majority`; 
 
+console.log(process.env.NODE_ENV)
+
 //connect to db
 if(process.env.NODE_ENV == undefined){
     mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})

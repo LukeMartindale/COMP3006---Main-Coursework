@@ -6,7 +6,7 @@ verifyToken = (request, response, next) => {
     let token = request.session.token;
 
     if(!token) {
-        return response.status(403).redirect("http://"+ window.location.host + "/auth/login");
+        return response.status(403).redirect("http://localhost:9000/auth/login");
     };
 
     jwt.verify(token, config.secret, (error, decoded) => {
