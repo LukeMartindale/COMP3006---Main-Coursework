@@ -4,7 +4,7 @@ let fs = require("fs");
 let mongoose = require("mongoose");
 let socketIo = require("socket.io");
 
-let app = require("./app").app;
+let app = require("./App").app;
 
 let User = require("../database/models/model.user").User;
 let Group = require("../database/models/model.group").Group;
