@@ -1,6 +1,10 @@
 $(function(){
 
-    let logout_url = "http://localhost:9000/auth/logout/"
+    if(window.location.hostname == "localhost"){
+        url_prefix = "http://localhost:9000"
+    }
+
+    let logout_url = url_prefix + "/auth/logout/"
 
     $("#logout-button").click(function(){
 
@@ -9,7 +13,7 @@ $(function(){
             type: 'POST',
             datatype: 'json',
             success: function(result){
-                window.location.replace("http://localhost:9000/auth/login/")
+                window.location.replace(url_prefix + "/auth/login/")
             }
         })
 

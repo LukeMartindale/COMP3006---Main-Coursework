@@ -1,9 +1,12 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 $(function(){
     
-
     $("#invite-button").click(function(){
 
-        invite_url = "http://localhost:9000/chat/group/invite"
+        invite_url = url_prefix + "/chat/group/invite"
 
         let value = $('#member-select').find(":selected").val();
         if(value != "blank"){
@@ -38,7 +41,7 @@ $(function(){
 
     $("#leave-button").click(function(){
 
-        leave_url = "http://localhost:9000/chat/group/leave"
+        leave_url = url_prefix + "/chat/group/leave"
 
         $.ajax({
             url: leave_url,
@@ -48,7 +51,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.replace("http://localhost:9000/app/groups")
+                window.location.replace(url_prefix + "/app/groups")
             },
             error: function(result){
                 console.log(result)
@@ -60,7 +63,7 @@ $(function(){
 
     $("#delete-button").click(function(){
 
-        delete_url = "http://localhost:9000/chat/group/delete"
+        delete_url = url_prefix + "/chat/group/delete"
 
         $.ajax({
             url: delete_url,
@@ -70,7 +73,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.replace("http://localhost:9000/app/groups")
+                window.location.replace(url_prefix + "/app/groups")
             },
             error: function(result){
                 console.log(result)
@@ -82,7 +85,7 @@ $(function(){
 
     $("#back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/chat/group/" + group_id
+        window.location.href = url_prefix + "/chat/group/" + group_id
 
     });
 

@@ -1,6 +1,10 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 $(function(){
 
-    let create_url = "http://localhost:9000/app/groups/creategroup/"
+    let create_url = url_prefix + "/app/groups/creategroup/"
 
     $("#create-button").click(function() {
 
@@ -15,7 +19,7 @@ $(function(){
                 },
                 datatype: 'json',
                 success: function(result){
-                    window.location.href = "http://localhost:9000/app/groups"
+                    window.location.href = url_prefix + "/app/groups"
                 },
                 error: function(result){
                     $("#group-error-box").empty().append(result.responseJSON.message)
@@ -32,7 +36,7 @@ $(function(){
 
     $("#back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/app/groups/"
+        window.location.href = url_prefix + "/app/groups/"
 
     });
 

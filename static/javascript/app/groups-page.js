@@ -1,7 +1,11 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 $(function(){
 
     $.ajax({
-        url: "http://localhost:9000/app/notifications/group/unread/",
+        url: url_prefix + "/app/notifications/group/unread/",
         type: 'GET',
         datatype: 'json',
         success: function(data){
@@ -26,7 +30,7 @@ $(function(){
     });
 
     $.ajax({
-        url: "http://localhost:9000/app/notifications/direct/unread/",
+        url: url_prefix + "/app/notifications/direct/unread/",
         type: 'GET',
         datatype: 'json',
         success: function(data){

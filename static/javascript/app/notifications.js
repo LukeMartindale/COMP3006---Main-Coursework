@@ -1,8 +1,12 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 $(function(){
 
     $(".notification-friend-accept").click(function(){
 
-        let accept_url = "http://localhost:9000/app/notifications"
+        let accept_url = url_prefix + "/app/notifications"
 
         $.ajax({
             url: accept_url,
@@ -24,7 +28,7 @@ $(function(){
 
     $(".notification-friend-decline").click(function(){
 
-        let decline_url = "http://localhost:9000/app/notifications"
+        let decline_url = url_prefix + "/app/notifications"
 
         $.ajax({
             url: decline_url,
@@ -46,7 +50,7 @@ $(function(){
 
     $(".notification-group-accept").click(function(){
 
-        let accept_url = "http://localhost:9000/app/notifications"
+        let accept_url = url_prefix + "/app/notifications"
 
         $.ajax({
             url: accept_url,
@@ -68,7 +72,7 @@ $(function(){
 
     $(".notification-group-decline").click(function(){
 
-        let decline_url = "http://localhost:9000/app/notifications"
+        let decline_url = url_prefix + "/app/notifications"
 
         $.ajax({
             url: decline_url,

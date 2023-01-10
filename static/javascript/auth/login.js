@@ -1,6 +1,10 @@
 $(function(){
 
-    let login_url = "http://localhost:9000/auth/login/"
+    if(window.location.hostname == "localhost"){
+        url_prefix = "http://localhost:9000"
+    }
+
+    let login_url = url_prefix + "/auth/login/"
 
     $("#login-login-button").click(function(){
 
@@ -16,7 +20,7 @@ $(function(){
             },
             datatype: 'json',
             success: function(result){
-                window.location.href = "http://localhost:9000/app/groups"
+                window.location.href = url_prefix + "/app/groups"
             },
             error:  function(result){
                 if(result.responseJSON.message == 'User Not Found'){
@@ -34,7 +38,7 @@ $(function(){
 
     $("#login-signup-button").click(function(){
 
-        window.location.replace("http://localhost:9000/auth/signup/")
+        window.location.replace(url_prefix + "/auth/signup/")
 
     });
 

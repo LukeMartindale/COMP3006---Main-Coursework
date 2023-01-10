@@ -1,4 +1,8 @@
-let socket = io("http://localhost:9000");
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
+let socket = io(url_prefix);
 
 function alertTime(){
     $(".alert-box").addClass("no-alerts")
@@ -11,12 +15,12 @@ function alertTimeAlt(){
 $(function(){
 
     socket.on("Friend:" + USER_ID, function(alert){
-        if(window.location.href == "http://localhost:9000/app/groups" || window.location.href == "http://localhost:9000/app/friends") {
+        if(window.location.href == url_prefix + "/app/groups" || window.location.href == url_prefix + "/app/friends") {
             $(".content").prepend("<a href='http://localhost:9000/app/notifications' class='alert-box create-wrapper' id='alerts-box'></a>")
             $("#alerts-box").append("<div class='create-content' id='create-content'>")
             $("#create-content").append("<h2 class='create-title'>New Friend Request!</h2>")
             window.setTimeout(alertTime, 7000)
-        } else if(window.location.href == "http://localhost:9000/app/notifications"){
+        } else if(window.location.href == url_prefix + "/app/notifications"){
             window.location.reload()
         } else {
             $(".alert-wrapper").prepend("<a href='http://localhost:9000/app/notifications' class='alert-content'>New Friend Request</a>")
@@ -25,12 +29,12 @@ $(function(){
     });
 
     socket.on("Group:" + USER_ID, function(alert){
-        if(window.location.href == "http://localhost:9000/app/groups" || window.location.href == "http://localhost:9000/app/friends") {
+        if(window.location.href == url_prefix + "/app/groups" || window.location.href == url_prefix + "/app/friends") {
             $(".content").prepend("<a href='http://localhost:9000/app/notifications' class='alert-box create-wrapper' id='alerts-box'></a>")
             $("#alerts-box").append("<div class='create-content' id='create-content'>")
             $("#create-content").append("<h2 class='create-title'>New Group Invite!</h2>")
             window.setTimeout(alertTime, 7000)
-        } else if(window.location.href == "http://localhost:9000/app/notifications"){
+        } else if(window.location.href == url_prefix + "/app/notifications"){
             window.location.reload()
         } else {
             $(".alert-wrapper").prepend("<a href='http://localhost:9000/app/notifications' class='alert-content'>New Group Invite</a>")
@@ -39,7 +43,7 @@ $(function(){
     });
 
     socket.on("User:" + USER_ID, function(alert){
-        if(window.location.href == "http://localhost:9000/app/groups"){
+        if(window.location.href == url_prefix + "/app/groups"){
             if(alert.type == "group"){
                 if($("#" + alert.group_id + "-alert-counter").hasClass("no-alerts")){
                     $("#" + alert.group_id + "-alert-counter").removeClass("no-alerts")
@@ -56,7 +60,7 @@ $(function(){
                 $("#friend-alert-counter").text(val)
             };
 
-        } else if(window.location.href == "http://localhost:9000/app/friends") {
+        } else if(window.location.href == url_prefix + "/app/friends") {
             if(alert.type == "group"){
                 if($("#group-alert-counter").hasClass("no-alerts")){
                     $("#group-alert-counter").removeClass("no-alerts")
@@ -73,7 +77,7 @@ $(function(){
                 val++
                 $("#" + alert.sender_id + "-alert-counter").text(val)
             };
-        } else if(window.location.href == "http://localhost:9000/app/notifications") {
+        } else if(window.location.href == url_prefix + "/app/notifications") {
             if(alert.type == "group"){
                 if($("#group-alert-counter").hasClass("no-alerts")){
                     $("#group-alert-counter").removeClass("no-alerts")

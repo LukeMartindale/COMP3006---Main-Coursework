@@ -10,11 +10,5 @@ async function loginPage(request, response) {
 
 }
 
-exports.LoggedIn = (request, response) => {
-
-    response.render("auth/loggedin")
-    
-}
-
 module.exports.signupPage = signupPage;
 module.exports.loginPage = loginPage;

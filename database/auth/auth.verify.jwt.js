@@ -5,10 +5,16 @@ let jwt = require("jsonwebtoken")
 verifyToken = (request, response, next) => {
     let token = request.session.token;
 
-    console.log()
+    if(process.env.NODE_ENV == undefined){
+        url_prefix = "http://localhost:9000"
+    }
+
+    if(process.env.NODE_ENV == "test"){
+        url_prefix = "http://localhost:9000"
+    }
 
     if(!token) {
-        return response.status(403).redirect("http://localhost:9000/auth/login");
+        return response.status(403).redirect(url_prefix + "/auth/login");
     };
 
     jwt.verify(token, config.secret, (error, decoded) => {

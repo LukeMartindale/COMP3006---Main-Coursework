@@ -1,6 +1,10 @@
 $(function(){
 
-    let signup_url = "http://localhost:9000/auth/signup/"
+    if(window.location.hostname == "localhost"){
+        url_prefix = "http://localhost:9000"
+    }
+
+    let signup_url = url_prefix + "/auth/signup/"
 
     $("#signup-signup-button").click(function(){
 
@@ -17,7 +21,7 @@ $(function(){
                 },
                 datatype: 'json',
                 success: function(result){
-                    window.location.replace("http://localhost:9000/auth/login/")
+                    window.location.replace(url_prefix + "/auth/login/")
                 },
                 error:  function(result){
                     if(result.responseJSON.message == 'Username already exists!'){
@@ -41,7 +45,7 @@ $(function(){
 
     $("#signup-login-button").click(function(){
 
-        window.location.replace("http://localhost:9000/auth/login/")
+        window.location.replace(url_prefix + "/auth/login/")
 
     });
 

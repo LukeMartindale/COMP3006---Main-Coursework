@@ -1,7 +1,11 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 function sendMessage() {
 
-    let send_url = "http://localhost:9000/chat/direct/"
-    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
+    let send_url = url_prefix + "/chat/direct/"
+    let notification_url = url_prefix + "/app/notifications/groupmessage"
     let user_text = $("#chat-input").val()
 
     if(user_text.length > 0){
@@ -48,8 +52,8 @@ function sendMessage() {
 
 function sendImage() {
 
-    let send_url = "http://localhost:9000/chat/direct/"
-    let notification_url = "http://localhost:9000/app/notifications/groupmessage/"
+    let send_url = url_prefix + "/chat/direct/"
+    let notification_url = url_prefix + "/app/notifications/groupmessage/"
     let user_text = $(".dropdown-input").val()
 
     if(user_text.length > 0){
@@ -95,7 +99,7 @@ function sendImage() {
 
 function unfriendUser(){
 
-    let unfriend_url = "http://localhost:9000/app/friends/unfriend/"
+    let unfriend_url = url_prefix + "/app/friends/unfriend/"
 
     $.ajax({
         url: unfriend_url,
@@ -105,7 +109,7 @@ function unfriendUser(){
         },
         datatype: 'json',
         success: function(result){
-            window.location.replace("http://localhost:9000/app/friends/")
+            window.location.replace(url_prefix + "/app/friends/")
         },
         error: function(result){
             console.log(result)
@@ -117,7 +121,7 @@ function unfriendUser(){
 $(function(){
 
     $.ajax({
-        url: "http://localhost:9000/app/notifications/directmessage/resolve/",
+        url: url_prefix + "/app/notifications/directmessage/resolve/",
         type: 'POST',
         data: {
             "groupId": dm_id,
@@ -151,8 +155,8 @@ $(function(){
             "<div class=\"group-message\"><div class=\"group-message-content\"><h4>" + message.senderUsername + "</h4><p class=\"message-text\">" + message.text + "</p></div></div>")
 
         $('html, body').scrollTop($(document).height());
-        
-        })
+                
+    })
 
     socket.on("Direct-Image:" + dm_id, function(message){
 
@@ -177,7 +181,7 @@ $(function(){
 
     $(".back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/app/friends"
+        window.location.href = url_prefix + "/app/friends"
 
     });
 

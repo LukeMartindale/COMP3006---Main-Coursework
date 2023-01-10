@@ -1,6 +1,10 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 function inviteFriend(){
 
-    let invite_url = "http://localhost:9000/app/friends/invitefriend"
+    let invite_url = url_prefix + "/app/friends/invitefriend"
     let friend_id = $("#invite-member").val()
 
     $.ajax({
@@ -37,7 +41,7 @@ $(function(){
 
     $("#back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/app/friends/"
+        window.location.href = url_prefix + "/app/friends/"
 
     });
 

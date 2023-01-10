@@ -1,7 +1,11 @@
+if(window.location.hostname == "localhost"){
+    url_prefix = "http://localhost:9000"
+}
+
 function sendMessage() {
 
-    let send_url = "http://localhost:9000/chat/group/"
-    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
+    let send_url =  url_prefix + "/chat/group/"
+    let notification_url = url_prefix + "/app/notifications/groupmessage"
     let user_text = $("#chat-input").val()
 
     if(user_text.length > 0){
@@ -46,8 +50,8 @@ function sendMessage() {
 
 function sendImage() {
 
-    let send_url = "http://localhost:9000/chat/group/"
-    let notification_url = "http://localhost:9000/app/notifications/groupmessage"
+    let send_url = url_prefix + "/chat/group/"
+    let notification_url = url_prefix + "/app/notifications/groupmessage"
     let user_text = $(".dropdown-input").val()
 
     if(isImgUrl(user_text)){
@@ -102,7 +106,7 @@ $(function(){
     //When chat is loaded send to endpoint to mark all unread 
     // message notifications for this group as resolved
     $.ajax({
-        url: "http://localhost:9000/app/notifications/groupmessage/resolve",
+        url: url_prefix + "/app/notifications/groupmessage/resolve",
         type: 'POST',
         data: {
             "groupId": group_id,
@@ -162,7 +166,7 @@ $(function(){
 
     $(".back-button").click(function(){
 
-        window.location.href = "http://localhost:9000/app/groups"
+        window.location.href = url_prefix + "/app/groups"
 
     });
 
