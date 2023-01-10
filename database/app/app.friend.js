@@ -21,13 +21,9 @@ InviteFriend = async (request, response) => {
         responseRequired: true,
     })
 
-    user_request.save((error, message) => {
-        if(error){
-            response.status(500).send({"message": error})
-            return;
-        }
-        response.status(200).send({"message": "Friend Request Sent!"})
-    });
+    await user_request.save()
+
+    response.status(200).send({"message": "Friend Request Sent!"})
 
 };
 
@@ -53,7 +49,7 @@ CheckIfAlreadyFriends = async (request, response, next) => {
     let user_id = jwt.decode(request.session.token).id
     let recipientId = request.body.recipientId
 
-    let user = await User.findById(user_id).exec()
+    let user = await User.findById(user_id)
 
     for(let i=0; i< user.friends.length; i++){
         if(user.friends[i].friend == recipientId){
