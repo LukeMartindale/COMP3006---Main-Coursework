@@ -5,6 +5,8 @@ let jwt = require("jsonwebtoken")
 verifyToken = (request, response, next) => {
     let token = request.session.token;
 
+    console.log()
+
     if(!token) {
         return response.status(403).redirect("http://localhost:9000/auth/login");
     };
