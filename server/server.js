@@ -21,16 +21,16 @@ let credentials = {
 
 url = `mongodb+srv://${credentials.name}:${credentials.password}@cluster0.rh5pgvb.mongodb.net/slantdb?retryWrites=true&w=majority`; 
 
-//connect to db
-if(process.env.NODE_ENV == undefined){
-    mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
-    .then(() => {
-        console.log("Successfully connected to Main Database");
-    })
-    .catch(error => {
-        console.error("Error: ", error)
-    })
-}
+// //connect to db
+// if(process.env.NODE_ENV == undefined){
+//     mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true})
+//     .then(() => {
+//         console.log("Successfully connected to Main Database");
+//     })
+//     .catch(error => {
+//         console.error("Error: ", error)
+//     })
+// }
 
 
 //create server and export for use elsewhere
@@ -110,6 +110,6 @@ module.exports.server = server
 module.exports.io = io
 
 //Set server to listen on port 9000
-server.listen(port, function(){
+server.listen(process.env.PORT || port, function(){
     console.log("Server is listening on port " + port);
 })
