@@ -4,6 +4,9 @@ $(function(){
         url_prefix = "http://localhost:9000"
     }
 
+    console.log(window.location.hostname)
+    console.log(window.location.host)
+
     let login_url = url_prefix + "/auth/login/"
 
     $("#login-login-button").click(function(){
