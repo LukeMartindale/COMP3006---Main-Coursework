@@ -25,7 +25,6 @@ $(function(){
                 window.location.href = url_prefix + "/app/groups"
             },
             error:  function(result){
-                console.log(result)
                 if(result.responseJSON.message == 'User Not Found'){
                     $("#password-error-box").empty()
                     $("#username-error-box").empty().append(result.responseJSON.message)

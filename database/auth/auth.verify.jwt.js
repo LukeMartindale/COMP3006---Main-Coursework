@@ -7,10 +7,10 @@ verifyToken = (request, response, next) => {
 
     if(process.env.NODE_ENV == undefined){
         url_prefix = "http://localhost:9000"
-    }
-
-    if(process.env.NODE_ENV == "test"){
+    } else if(process.env.NODE_ENV == "test"){
         url_prefix = "http://localhost:9000"
+    } else {
+        url_prefix = "https://" + window.location.hostname
     }
 
     if(!token) {

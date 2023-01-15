@@ -1,5 +1,7 @@
 if(window.location.hostname == "localhost"){
     url_prefix = "http://localhost:9000"
+} else {
+    url_prefix = "https://" + window.location.hostname
 }
 
 $(function(){
