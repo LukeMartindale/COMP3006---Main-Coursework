@@ -2,9 +2,6 @@ if(window.location.hostname == "localhost"){
     url_prefix = "http://localhost:9000"
 }
 
-console.log(window.location.hostname)
-console.log(window.location.host)
-
 $(function(){
 
     $.ajax({
