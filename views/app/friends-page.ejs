@@ -32,19 +32,19 @@
 
             <div class="menu-wrapper">
                 <div class="menu-bar">
-                    <a href="http://localhost:9000/app/groups" class="menu-bar-widget" id="groups-button">
+                    <a href="/app/groups" class="menu-bar-widget" id="groups-button">
                         Groups
                         <div id="group-alert-counter" class="alert-counter no-alerts">0</div>
                     </a>
-                    <a href="http://localhost:9000/app/friends" class="menu-bar-widget" id="friends-button">
+                    <a href="app/friends" class="menu-bar-widget" id="friends-button">
                         Friends
                         <div id="friend-alert-counter" class="alert-counter no-alerts">0</div>
                     </a>
-                    <a href="http://localhost:9000/app/notifications" class="menu-bar-widget" id="requests-button">
+                    <a href="/app/notifications" class="menu-bar-widget" id="requests-button">
                         Notifications
                         <div class="alert-counter no-alerts">0</div>
                     </a>
-                    <a href="http://localhost:9000/app/account" class="menu-bar-widget" id="account-button">
+                    <a href="/app/account" class="menu-bar-widget" id="account-button">
                         Account
                     </a>
                     <div class="menu-bar-widget" id="logout-button">
@@ -58,7 +58,7 @@
                 <% for(i=0; i<friends.length; i++) { %>
                     <% for(x=0; x<friends[i].friends.length; x++) { %>
                         <% if(friends[i].friends[x].friend == id) { %>
-                            <a href="http://localhost:9000/chat/direct/<%= friends[i].friends[x].dm_id %>" class="chat-group">
+                            <a href="/chat/direct/<%= friends[i].friends[x].dm_id %>" class="chat-group">
                         <% } %>
                     <% } %>
                         <div class="chat-content">
@@ -72,7 +72,7 @@
                     </a>
                 <% } %>
     
-                <a href="http://localhost:9000/app/friends/invitefriend" class="create-wrapper">
+                <a href="/app/friends/invitefriend" class="create-wrapper">
                     <div class="create-content">
                         <h2 class="create-title">
                             Add New Friend +
